@@ -1,0 +1,107 @@
+.container1 {
+    margin-top: 110px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.register-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: slideIn 1s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.register-card .card-header {
+    border-bottom: none;
+    background: rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.register-card .card-body {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 0 0 15px 15px;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.register-card .form-control {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease-in-out;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.register-card .form-control:focus {
+    background: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.register-card .btn {
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    animation: fadeInUp 1.2s ease-in-out;
+}
+
+.register-card .btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+    color: #ff7e5f;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+    

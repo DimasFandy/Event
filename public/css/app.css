@@ -1,0 +1,146 @@
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    color: white;
+    padding-top: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.sidebar:hover {
+    background-color: #495057; /* Darken the sidebar on hover */
+}
+
+.sidebar h4 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar hr {
+    border: 1px solid #ffffff;
+    width: 80%;
+    margin: 10px auto;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    margin: 5px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+    color: #f1c40f; /* Yellow color on hover */
+}
+
+.sidebar .form-group {
+    margin: 20px 15px;
+}
+
+
+/* Optional: Adjust the content margin to make space for the sidebar */
+.content {
+    margin-left: 250px;
+    /* Push content to the right to make space for sidebar */
+    animation: fadeIn 0.5s ease-in-out; /* Fade-in effect for content */
+}
+
+/* Animation for content fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Dropdown Animation */
+.dropdown-menu {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+}
+
+/* CSS Pagination Styling */
+.pagination {
+    justify-content: center;
+    display: flex;
+    margin-top: 20px;
+}
+
+.pagination .page-link {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin: 0 5px;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+    background-color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+    border-color: #ddd;
+}
+
+/* CSS DASHBOARD */
+/* Animation for fading in */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation to the cards */
+.animated-card {
+    animation: fadeIn 1s ease-out;
+}
+
+/* Optional: Add a slight delay to each card for staggered effect */
+.animated-card:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.animated-card:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.animated-card:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+
+

@@ -1,0 +1,170 @@
+/* login.css */
+
+/* Background gradient animation */
+body {
+    position: relative;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b, #6a11cb, #2575fc);
+    background-size: 400% 400%;
+    animation: gradientBackground 10s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Animating the gradient background */
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Adding wave effect with a pseudo-element */
+body::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: url('https://www.transparenttextures.com/patterns/wave.png') repeat-x;
+    animation: waveAnimation 4s ease-in-out infinite;
+}
+
+/* Keyframes for the wave animation */
+@keyframes waveAnimation {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Moving circles and objects animation */
+.moving-object {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: moveObject 6s linear infinite;
+}
+
+/* Keyframes for moving objects */
+@keyframes moveObject {
+    0% {
+        top: -60px;
+        left: -60px;
+    }
+
+    25% {
+        top: 50%;
+        left: 20%;
+    }
+
+    50% {
+        top: 100%;
+        left: 50%;
+    }
+
+    75% {
+        top: 50%;
+        left: 80%;
+    }
+
+    100% {
+        top: -60px;
+        left: 100%;
+    }
+}
+
+/* Animating the left and right columns */
+.col-md-6 {
+    opacity: 0;
+    animation: slideIn 1s ease-out forwards;
+}
+
+.col-md-6:nth-child(1) {
+    animation-delay: 0.5s;
+    /* Left column delay */
+}
+
+.col-md-6:nth-child(2) {
+    animation-delay: 1s;
+    /* Right column delay */
+}
+
+/* Slide-in animation for columns */
+@keyframes slideIn {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animated text effect for the header */
+h2 {
+    animation: fadeInUp 2s ease-out forwards; /* Use forwards to keep the final state */
+    opacity: 0; /* Start with opacity 0 */
+    transform: translateY(30px); /* Start with translated Y */
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Button hover effect */
+.btn-primary {
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.1);
+    background-color: #3b82f6;
+    /* Darker blue */
+}
+
+/* Input and card styling */
+.card {
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Slight transparency for the card */
+    border-radius: 12px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    color: #333;
+}
+
+/* Error message styling */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+}

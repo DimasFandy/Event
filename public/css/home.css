@@ -1,0 +1,66 @@
+.nav-menu .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-menu .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.nav-menu .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+    /* css event */
+    #speakers .speaker {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: center;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #speakers .speaker:hover {
+        transform: scale(1.05);
+    }
+
+    #speakers .speaker img {
+        width: 100%;
+        height: 200px; /* Atur tinggi gambar */
+        object-fit: cover; /* Potong gambar agar sesuai */
+    }
+
+    #speakers .details {
+        padding: 15px;
+        background: #f9f9f9;
+    }
+
+    #speakers .details h3 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    #speakers .details p {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    #speakers .details .social a {
+        color: #555;
+        margin: 0 5px;
+        font-size: 18px;
+        transition: color 0.3s;
+    }
+
+    #speakers .details .social a:hover {
+        color: #007bff;
+    }

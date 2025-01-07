@@ -1,0 +1,127 @@
+/* Styling for modal backdrop */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+}
+
+/* Modal content styling */
+.modal-content {
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    border: none; /* Remove default border */
+    overflow: hidden;
+    animation: slideIn 0.6s ease-out; /* Slide-in animation */
+}
+
+/* Modal header */
+.modal-header {
+    background-color: #007bff; /* Primary color */
+    color: #fff; /* White text */
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: none; /* Remove default border */
+    animation: headerBounce 0.8s ease; /* Bounce animation for header */
+}
+
+/* Close button */
+.modal-header .close {
+    color: #fff; /* White close icon */
+    opacity: 1; /* Make it fully visible */
+    text-shadow: none; /* Remove shadow */
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-header .close:hover {
+    transform: rotate(90deg); /* Rotate effect on hover */
+}
+
+/* Modal body */
+.modal-body {
+    padding: 20px;
+    font-size: 16px;
+    color: #333; /* Text color */
+    background-color: #f8f9fa; /* Light gray background */
+    line-height: 1.6;
+    animation: fadeIn 0.5s ease-in-out; /* Fade-in animation for body */
+}
+
+/* Modal footer */
+.modal-footer {
+    background-color: #f1f1f1; /* Light footer background */
+    border-top: none; /* Remove default border */
+    padding: 15px;
+}
+
+/* Buttons in modal footer */
+.modal-footer .btn {
+    border-radius: 50px; /* Rounded buttons */
+    padding: 10px 20px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal-footer .btn:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+/* Success Modal specific colors */
+#successModal .modal-header {
+    background-color: #28a745; /* Green for success */
+}
+
+#successModal .modal-footer .btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+#successModal .modal-footer .btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Error Modal specific colors */
+#errorModal .modal-header {
+    background-color: #dc3545; /* Red for error */
+}
+
+#errorModal .modal-footer .btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+#errorModal .modal-footer .btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes headerBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}

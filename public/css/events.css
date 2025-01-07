@@ -1,0 +1,72 @@
+/* public/css/events.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Optional: Style table headings and cells */
+.table th, .table td {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400; /* Regular weight */
+}
+
+/* Customize the title text */
+h1, .text-primary {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; /* Bold weight for headings */
+}
+/* Table and Row Styling */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+/* Row animation for better UI */
+.event-row {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Badge styling */
+.badge {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+/* Button hover animation */
+.event-action-btn {
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.event-action-btn:hover {
+    transform: scale(1.1);
+    background-color: #0056b3;
+}
+
+/* Hover effect for action buttons */
+.event-action-btn:hover {
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.table th:nth-child(6), .table td:nth-child(6) {
+    width: 15%;
+}
+
+/* Animation for page load */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
