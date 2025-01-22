@@ -11,6 +11,8 @@
     <a href="{{ route('events.create') }}" class="btn btn-success mb-3"><i class="bi bi-calendar2-plus-fill"></i> Tambah Event</a>
 @endcan
 
+<a href="{{ route('events.export') }}" class="btn btn-primary mb-3"><i class="bi bi-file-earmark-excel"></i> Export to Excel</a>
+
 <!-- Filter Section (Select2) -->
 <h6 class="text-muted">Filter Kategori</h6>
 <form id="filterForm" method="GET" action="{{ route('events.index') }}" class="mb-4">

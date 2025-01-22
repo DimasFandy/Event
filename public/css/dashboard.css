@@ -1,0 +1,99 @@
+
+    /* Gaya untuk header */
+    h4.text-center {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.8rem;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+    }
+
+    /* Gaya untuk container chart */
+    .chart-card {
+        width: 100%; /* Pastikan lebar penuh */
+        max-width: 450px; /* Ukuran maksimum */
+        height: 400px; /* Konsisten dengan canvas */
+        display: flex;
+        justify-content: center; /* Memusatkan canvas */
+        align-items: center;
+        padding: 10px;
+        box-sizing: border-box; /* Pastikan padding tidak memengaruhi ukuran */
+        background: linear-gradient(135deg, #58abff, #050505);
+        border-radius: 40px 100px;
+    }
+
+
+    .chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsivitas untuk layar kecil */
+    @media (max-width: 768px) {
+        .chart-canvas {
+            height: 150px;
+        }
+
+        h4.text-center {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .chart-card {
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+
+.member-photos {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.member-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-left: -10px; /* Overlap */
+    z-index: 1; /* Ensure proper stacking */
+    background-color: #ddd; /* Fallback for images without photo */
+}
+
+.member-photos .member-photo:first-child {
+    margin-left: 0; /* No overlap for the first image */
+}
+
+.extra-members {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #6c757d; /* Dark background for extra members */
+    color: #fff; /* White text for contrast */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: -10px; /* Align with overlapping images */
+    z-index: 0; /* Ensure it appears behind the photos */
+}
+
+.pagination .page-link {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

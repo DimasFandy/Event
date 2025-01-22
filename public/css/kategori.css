@@ -1,0 +1,113 @@
+/* Table styling for the kategori table */
+.table {
+    font-family: 'Merriweather Sans', sans-serif;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: #2c3e50; /* Dark background for header */
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.table td {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
+}
+
+.table td:last-child {
+    border-bottom: none;
+}
+
+/* Hover effect on rows */
+.table-hover tbody tr:hover {
+    background-color: #e1f5fe; /* Light blue hover effect */
+    transition: background-color 0.3s ease;
+}
+
+/* Action button styling */
+.table .btn {
+    font-weight: 500;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Button styles for Edit and Delete */
+.table .btn-warning {
+    background-color: #f39c12; /* Amber for edit button */
+    color: #fff;
+    border: none;
+}
+
+.table .btn-danger {
+    background-color: #e74c3c; /* Red for delete button */
+    color: #fff;
+    border: none;
+}
+
+/* Button hover effect */
+.table .btn:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+.table .btn-warning:hover {
+    background-color: #e67e22; /* Darker amber */
+}
+
+.table .btn-danger:hover {
+    background-color: #c0392b; /* Darker red */
+}
+
+/* Table footer / Pagination style */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    border-radius: 5px;
+    padding: 8px 15px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination .page-link:hover {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+/* Responsiveness for small screens */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .table .btn {
+        font-size: 0.85rem;
+        padding: 4px 10px;
+    }
+}

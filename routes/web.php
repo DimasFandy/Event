@@ -11,6 +11,8 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\EventController;
+use App\Exports\EventsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,4 +85,6 @@ Route::post('/events/register/{id}', [EventController::class, 'register'])->name
 //route untuk menampilkan event saya
 Route::get('/myevent', [EventController::class, 'myEvents'])->name('user.myevent');
 
-
+Route::get('events/export', function () {
+    return Excel::download(new EventsExport, 'events.xlsx');
+})->name('events.export');

@@ -1,0 +1,36 @@
+.card {
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group label {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.btn-success {
+    font-size: 1.1rem;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.btn-success:hover {
+    background-color: #45a049;
+}
+
+.card .form-group + .form-group {
+    margin-top: 1.5rem;
+}
