@@ -59,9 +59,9 @@
                                 <!-- Tampilkan Nama -->
                                 <span class="me-2">{{ Auth::guard('member')->user()->name }}</span>
                                 <!-- Tampilkan Foto Profil -->
-                                <img src="{{ asset('storage/' . Auth::guard('member')->user()->photo) }}"
-                                     alt="User Photo"
-                                     class="rounded-circle user-photo">
+                               <!-- Tampilkan Foto Profil -->
+                               <img src="{{ asset('storage/' . (Auth::guard('member')->user()->photo ?? 'user.jpg')) }}"
+                               alt="User Photo" class="rounded-circle user-photo">
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="userMenu">
                                 <li>

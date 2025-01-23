@@ -117,18 +117,25 @@ class KategoriController extends Controller
     // Mendapatkan data yang sudah difilter berdasarkan kategori
     public function getFilteredData(Request $request)
     {
-        $values = $request->input('values');
+        try {
+            $values = $request->input('values', []);
 
-        if (!$values) {
-            return response()->json(['message' => 'Tidak ada data yang dipilih.'], 400);
+            if (empty($values)) {
+                return response()->json(['error' => 'No values provided'], 400);
+            }
+
+            // Ambil data berdasarkan filter
+            $kategoris = Kategori::whereIn('id', $values)->get();
+
+            // Render view untuk tabel
+            $html = view('partials.kategori_table', compact('kategoris'))->render();
+
+            return response()->json(['html' => $html]);
+        } catch (\Exception $e) {
+            \Log::error('Error in getFilteredData: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        // Ambil data berdasarkan kategori yang dipilih
-        $filteredData = Event::whereIn('kategori_id', $values)->get();
-
-        // Return view atau data JSON
-        $html = view('admin.partials.filtered_data', compact('filteredData'))->render();
-
-        return response()->json($html);
     }
+
+
 }

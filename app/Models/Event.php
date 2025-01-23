@@ -39,4 +39,5 @@ class Event extends Model
     {
         return $this->members()->count();
     }
+    
 }

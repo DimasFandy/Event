@@ -96,4 +96,84 @@
     align-items: center;
     justify-content: center;
 }
+/* css untuk card di halaman dashboard */
+.card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease, transform 0.3s ease-in-out;
+    border-radius: 8px;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.05); /* Tambahkan efek zoom */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.card-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards; /* Animasi fade in untuk card body */
+}
+
+.display-4 {
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.list-group-item {
+    border-radius: 0;
+    padding: 12px;
+    font-size: 1.1rem;
+}
+
+.animated-card {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Animasi zoom dan shadow saat hover */
+@keyframes cardZoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Equal height for cards */
+.equal-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.equal-card .card-body {
+    flex-grow: 1;
+}
+
+/* Responsiveness */
+@media (max-width: 767px) {
+    .card-body {
+        padding: 1rem;
+    }
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}
 

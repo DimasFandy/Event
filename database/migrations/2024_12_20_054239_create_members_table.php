@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
-            $table->string('password'); // kolom password
+            $table->string('password')->nullable(); // kolom password
             $table->string('photo')->nullable(); // kolom untuk menyimpan path foto
             $table->timestamps();
         });

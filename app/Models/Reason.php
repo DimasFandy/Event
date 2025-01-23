@@ -9,11 +9,12 @@ class Reason extends Model
 {
     use HasFactory;
 
+    protected $table = 'reasons';
     protected $fillable = [
         'event_id',
         'member_id',
         'name',
-        'reason',
+        'reasons',
     ];
 
 

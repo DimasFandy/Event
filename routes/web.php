@@ -85,6 +85,9 @@ Route::post('/user/auth/logout', [AuthUserController::class, 'logout'])->name('l
 // Route untuk detail event
 Route::get('/user/events/{event}', [EventController::class, 'ShowEventDetail'])->name('user.events_details');
 
+// Rute untuk menghapus member
+Route::delete('/events/{event_id}/members/{member_id}', [EventController::class, 'destroyMember'])->name('events.members.destroy');
+
 //route untuk register event user
 Route::post('/events/register/{id}', [EventController::class, 'register'])->name('events.register');
 
@@ -93,7 +96,7 @@ Route::get('/myevent', [EventController::class, 'myEvents'])->name('user.myevent
 
 Route::get('/events/{event_id}/members/create', [EventMemberController::class, 'create'])->name('events.members.create');
 Route::post('/events/{event_id}/members', [EventMemberController::class, 'store'])->name('events.members.store');
-Route::delete('/events/{event_id}/members/{member_id}', [EventMemberController::class, 'destroy'])->name('events.members.destroy');
+
 Route::get('/members/{id}/editpassword', [MemberController::class, 'editPassword'])->name('members.editPassword');
 Route::put('/members/{id}/update-password', [MemberController::class, 'updatePassword'])->name('members.update-password');
 

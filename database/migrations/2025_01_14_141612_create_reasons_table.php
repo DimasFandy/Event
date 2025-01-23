@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_id')->constrained()->onDelete('cascade'); // Relasi ke event
             $table->foreignId('member_id')->constrained('member')->onDelete('cascade'); // Relasi ke member
-            $table->string('name'); // Nama peserta
             $table->text('reasons'); // Alasan penghapusan
             $table->timestamps(); // Timestamps
         });

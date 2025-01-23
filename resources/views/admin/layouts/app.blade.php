@@ -15,6 +15,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
 </head>
 
 <body>
@@ -27,48 +28,74 @@
     <!-- Sidebar -->
     <div class="d-flex">
         <div class="sidebar" style="width: 250px; background-color: #343a40; color: white; padding: 15px;">
-            <h4>Admin Dashboard</h4>
+            <h4><img width="48" height="48"
+                    src="https://img.icons8.com/fluency/48/discord-hypesquad-events-badge.png"
+                    alt="discord-hypesquad-events-badge" /> Admin</h4>
             <hr class="text-white">
-            <a href="{{ route('admin.dashboard') }}" class="text-white">Home</a>
+            <a href="{{ route('admin.dashboard') }}"
+                class="text-white {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <img width="30" height="30" src="https://img.icons8.com/color/96/dashboard-layout.png"
+                    alt="dashboard-layout" /> Dashboard
+            </a>
 
             <!-- Dropdown Menu for Events -->
             <div class="mt-3">
-                <h6 class="text-white">Events</h6>
                 <ul class="list-unstyled">
                     <li class="dropdown">
-                        <a href="#" class="text-white text-decoration-none dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">Events</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ route('kategoris.index') }}" class="dropdown-item text-black">Kategori</a>
+                        <a href="#"
+                            class="text-white text-decoration-none dropdown-toggle {{ request()->routeIs('kategoris.*') || request()->routeIs('events.*') ? 'active' : '' }}"
+                            data-bs-toggle="collapse" data-bs-target="#eventDropdown" aria-expanded="false"
+                            aria-controls="eventDropdown">
+                            <img width="30" height="30"
+                                src="https://img.icons8.com/fluency/48/event-accepted--v1.png"
+                                alt="event-accepted--v1" /> Events
+                        </a>
+                        <ul class="collapse dropdown-menu" id="eventDropdown">
+                            <li><a href="{{ route('kategoris.index') }}"
+                                    class="dropdown-item text-black {{ request()->routeIs('kategoris.*') ? 'active' : '' }}">Kategori</a>
                             </li>
-                            <li><a href="{{ route('events.index') }}" class="dropdown-item text-black">List Event</a>
-                            </li>
+                            <li><a href="{{ route('events.index') }}"
+                                    class="dropdown-item text-black {{ request()->routeIs('events.*') ? 'active' : '' }}">List
+                                    Event</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
 
-            <a href="{{ route('members.index') }}" class="text-white mt-2">Members</a>
+            <a href="{{ route('members.index') }}"
+                class="text-white mt-2 {{ request()->routeIs('members.*') ? 'active' : '' }}">
+                <img width="30" height="30" src="https://img.icons8.com/fluency/48/conference-call.png"
+                    alt="conference-call" /> Members
+            </a>
 
             <!-- Dropdown Menu for Roles, Permissions, and Users -->
             <div class="mt-3">
-                <h6 class="text-white">Manage Admin</h6>
                 <ul class="list-unstyled">
                     <li class="dropdown">
-                        <a href="#" class="text-white text-decoration-none dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">Manage Admin</a>
+                        <a href="#"
+                            class="text-white text-decoration-none dropdown-toggle {{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') || request()->routeIs('users.*') ? 'active' : '' }}"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img width="30" height="30"
+                                src="https://img.icons8.com/ios-filled/100/228BE6/admin-settings-male.png"
+                                alt="admin-settings-male" /> Manage Admin
+                        </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('roles.index') }}" class="dropdown-item text-black">Roles</a></li>
+                            <li><a href="{{ route('roles.index') }}"
+                                    class="dropdown-item text-black {{ request()->routeIs('roles.*') ? 'active' : '' }}">Roles</a>
+                            </li>
                             <li><a href="{{ route('permissions.index') }}"
-                                    class="dropdown-item text-black">Permissions</a></li>
-                            <li><a href="{{ route('users.index') }}" class="dropdown-item text-black">Users</a></li>
+                                    class="dropdown-item text-black {{ request()->routeIs('permissions.*') ? 'active' : '' }}">Permissions</a>
+                            </li>
+                            <li><a href="{{ route('users.index') }}"
+                                    class="dropdown-item text-black {{ request()->routeIs('users.*') ? 'active' : '' }}">Users</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="content" style="flex-grow: 1;"> <!-- Adjust to fill the remaining space -->
+        <div class="content" style="flex-grow: 1;">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Dashboard</a>
@@ -79,16 +106,15 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('admin.dashboard') }}">Home</a>
+                                {{-- <a class="nav-link active" href="{{ route('admin.dashboard') }}">Dashboard</a> --}}
                             </li>
-                            <!-- User Dropdown Menu -->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     @if (Auth::check())
-                                        {{ Auth::user()->name }} <!-- Display the logged-in user's name -->
+                                        {{ Auth::user()->name }}
                                     @else
-                                        Guest <!-- Or show something else if no user is logged in -->
+                                        Guest
                                     @endif
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -106,19 +132,6 @@
             </nav>
 
             <div class="container mt-4">
-                <!-- Filter Section Moved to Content Area -->
-                {{-- <h6 class="text-muted">Filter Data</h6>
-                <form id="filterForm" class="mb-4">
-                    <label for="filterSelect" class="form-label">Pilih Kategori atau Event</label>
-                    <select id="filterSelect" class="form-select" multiple="multiple">
-                        <!-- Select2 Placeholder -->
-                    </select>
-                </form> --}}
-
-                <div id="dataContainer">
-                    <!-- Filtered Data Will Appear Here -->
-                </div>
-
                 @yield('content')
             </div>
 
@@ -145,7 +158,7 @@
         });
 
         $(document).ready(function() {
-            // Inisialisasi Select2
+            // Initialize Select2
             $('#filterSelect').select2({
                 placeholder: 'Pilih kategori atau event',
                 ajax: {
@@ -156,7 +169,7 @@
                     data: function(params) {
                         return {
                             _token: '{{ csrf_token() }}',
-                            search: params.term // Kirim parameter pencarian jika ada
+                            search: params.term // Send search parameter if any
                         };
                     },
                     processResults: function(data) {
@@ -171,29 +184,23 @@
                 }
             });
 
-            // Event listener untuk perubahan nilai filter
+            // Event listener for filter value change
             $('#filterSelect').on('change', function() {
-                var selectedValues = $(this).val(); // Mendapatkan nilai yang dipilih
-                fetchData(selectedValues); // Memanggil fungsi fetchData dengan nilai yang dipilih
+                var selectedValues = $(this).val();
+                fetchData(selectedValues);
             });
 
-            // Event listener untuk menghapus pilihan (clear) dari Select2
-            $('#filterSelect').on('select2:unselect', function(e) {
-                var selectedValues = $(this).val(); // Mendapatkan nilai yang tersisa setelah memilih X
-                fetchData(selectedValues); // Memanggil fungsi fetchData dengan nilai yang tersisa
-            });
-
-            // Fungsi untuk mengambil data berdasarkan filter yang dipilih
+            // Function to fetch data based on filter selection
             function fetchData(selectedValues) {
                 $.ajax({
                     url: '{{ route('getFilteredData') }}',
                     type: 'POST',
                     data: {
                         values: selectedValues,
-                        _token: '{{ csrf_token() }}' // Sertakan CSRF token
+                        _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        $('#dataContainer').html(response); // Menampilkan data yang diterima ke dalam #dataContainer
+                        $('#dataContainer').html(response);
                     },
                 });
             }

@@ -15,7 +15,7 @@ class HomeController extends Controller
 
         // Ambil data event untuk ditampilkan
         $events = Event::all();
-      
+
         return view('user.home', compact('events'));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Kategori; // Tambahkan model Kategori
 use App\Models\EventMember;
+use App\Models\Reason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -194,6 +195,35 @@ class EventController extends Controller
 
         return redirect()->route('events.index')->with('success', 'Event berhasil dinonaktifkan!');
     }
+
+    public function destroyMember(Request $request, $event_id, $member_id)
+    {
+        // Cari data event_member dengan event_id dan member_id
+        $member = EventMember::where('event_id', $event_id)
+            ->where('member_id', $member_id)
+            ->first();
+
+        // Log jika data member ditemukan
+        \Log::info("Mencari member_id: {$member_id} di event_id: {$event_id}");
+
+        if (!$member) {
+            return redirect()->back()->with('error', 'Peserta tidak ditemukan.');
+        }
+
+        // Menyimpan alasan penghapusan
+        $reason = new Reason();
+        $reason->event_id = $event_id;
+        $reason->member_id = $member_id;
+        $reason->reasons = $request->input('reason');
+        $reason->save();
+
+        // Hapus member
+        $member->delete();
+
+        return redirect()->route('events.show', $event_id)->with('success', 'Peserta berhasil dihapus.');
+    }
+
+
     public function getEventsByCategory($categoryId)
     {
         // Ambil events yang terkait dengan kategori tertentu (gunakan kolom 'kategori')
@@ -258,6 +288,4 @@ class EventController extends Controller
 
         return $pdf->stream('event-detail-' . $event->id . '.pdf');
     }
-
-    
 }
