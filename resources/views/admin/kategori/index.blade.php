@@ -5,6 +5,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Potta+One&family=Rampart+One&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
+        <!-- Select2 CSS -->
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
 
     <div class="container">
         <h1 class="mb-4" style="font-family: 'Poppins', sans-serif; color: #007bff;"><i class="bi bi-list-ul">Daftar
@@ -86,80 +88,72 @@
                 style="font-family: 'Poppins', sans-serif;">Next</a>
         </div>
 
-        <!-- Filtered Event Display -->
-        <div class="mt-5">
-            <h2>Daftar Event</h2>
-            <div class="row">
-                @foreach ($filteredData as $event)
-                    <div class="col-md-4">
-                        <div class="card mb-3">
-                            <div class="card-header">{{ $event->name }}</div>
-                            <div class="card-body">
-                                <p>{{ $event->date }}</p>
-                                <p>{{ $event->description }}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            // Inisialisasi Select2 untuk kategori dengan filter event
-            $('#filterSelect').select2({
-                placeholder: 'Pilih kategori',
-                ajax: {
-                    url: '{{ route('getDropdownData') }}', // Sesuaikan dengan route yang benar
-                    type: 'POST',
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        var selectedEventIds = $('#eventFilterSelect')
-                    .val(); // Ambil event ID yang dipilih
-                        return {
-                            _token: '{{ csrf_token() }}',
-                            search: params.term, // Kirimkan parameter pencarian jika ada
-                            selectedEventIds: selectedEventIds // Kirimkan filter berdasarkan event
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.map(item => ({
-                                id: item.id,
-                                text: item.name
-                            }))
-                        };
-                    },
-                    cache: true
+    // Inisialisasi Select2 untuk kategori dengan filter event
+    $('#filterSelect').select2({
+        placeholder: 'Pilih kategori',
+        ajax: {
+            url: '{{ route('getDropdownData') }}', // Sesuaikan dengan route yang benar
+            type: 'POST',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                var selectedEventIds = $('#eventFilterSelect').val(); // Ambil event ID yang dipilih
+                console.log('Selected Event IDs:', selectedEventIds); // Log selected event IDs
+                return {
+                    _token: '{{ csrf_token() }}',
+                    search: params.term, // Kirimkan parameter pencarian jika ada
+                    selectedEventIds: selectedEventIds // Kirimkan filter berdasarkan event
+                };
+            },
+            processResults: function(data) {
+                console.log('Dropdown Data:', data); // Log the data received from the server
+                return {
+                    results: data.map(item => ({
+                        id: item.id,
+                        text: item.name
+                    }))
+                };
+            },
+            cache: true
+        }
+    });
+
+    // Event listener untuk perubahan pada filter kategori
+    $('#filterSelect').on('change', function() {
+        var selectedValues = $(this).val(); // Ambil kategori yang dipilih
+        console.log('Selected Categories:', selectedValues); // Log the selected categories
+        fetchFilteredData(selectedValues); // Ambil data yang difilter
+    });
+
+    // Fungsi untuk mengambil data yang sudah difilter berdasarkan kategori
+    function fetchFilteredData(selectedValues) {
+        console.log('Fetching filtered data with values:', selectedValues); // Log the selected filter values
+        $.ajax({
+            url: '{{ route('getFilteredData') }}',
+            type: 'POST',
+            data: {
+                values: selectedValues,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                console.log('Filtered Data Response:', response); // Log the response received from the server
+                if (response.html) {
+                    $('#kategoriTableBody').html(response.html); // Update table body with new data
+                } else {
+                    console.log('No HTML content returned from server.'); // Log if no HTML is returned
                 }
-            });
-
-            // Event listener untuk perubahan pada filter kategori
-            $('#filterSelect').on('change', function() {
-                var selectedValues = $(this).val(); // Ambil kategori yang dipilih
-                fetchFilteredData(selectedValues); // Ambil data yang difilter
-            });
-
-            // Fungsi untuk mengambil data yang sudah difilter berdasarkan kategori
-            function fetchFilteredData(selectedValues) {
-                $.ajax({
-                    url: '{{ route('getFilteredData') }}',
-                    type: 'POST',
-                    data: {
-                        values: selectedValues,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        $('#kategoriTableBody').html(response
-                        .html); // Update table body dengan data baru
-                    }
-                });
+            },
+            error: function(xhr, status, error) {
+                console.log('Error fetching filtered data:', error); // Log if there's an error in the Ajax request
             }
         });
+    }
+});
+
     </script>
 @endsection

@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventMemberController;
 use App\Exports\EventsExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -51,8 +52,13 @@ Route::resource('users', UserController::class);
 Route::resource('kategoris', KategoriController::class);
 Route::post('kategoris/{kategori}/reactivate', [KategoriController::class, 'reactivate'])->name('kategoris.reactivate');
 
+Route::get('events/export', function () {
+    return Excel::download(new EventsExport, 'events.xlsx');
+})->name('events.export');
+
 // CRUD Event
 Route::resource('events', EventController::class);
+
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 Route::post('events/{event}/reactivate', [EventController::class, 'reactivate'])->name('events.reactivate');
 
@@ -85,6 +91,22 @@ Route::post('/events/register/{id}', [EventController::class, 'register'])->name
 //route untuk menampilkan event saya
 Route::get('/myevent', [EventController::class, 'myEvents'])->name('user.myevent');
 
-Route::get('events/export', function () {
-    return Excel::download(new EventsExport, 'events.xlsx');
-})->name('events.export');
+Route::get('/events/{event_id}/members/create', [EventMemberController::class, 'create'])->name('events.members.create');
+Route::post('/events/{event_id}/members', [EventMemberController::class, 'store'])->name('events.members.store');
+Route::delete('/events/{event_id}/members/{member_id}', [EventMemberController::class, 'destroy'])->name('events.members.destroy');
+Route::get('/members/{id}/editpassword', [MemberController::class, 'editPassword'])->name('members.editPassword');
+Route::put('/members/{id}/update-password', [MemberController::class, 'updatePassword'])->name('members.update-password');
+
+Route::get('events/{event_id}/export-pdf', [EventController::class, 'exportPdf'])->name('events.export_pdf');
+
+Route::middleware('auth:member')->group(function () {
+    Route::get('/editprofile', [AuthUserController::class, 'editProfile'])->name('user.editprofile');
+    Route::put('/editprofile', [AuthUserController::class, 'updateProfile'])->name('user.profile.update');  // Menggunakan PUT untuk pembaruan
+    Route::get('/editpassword', [AuthUserController::class, 'editPassword'])->name('user.editpassword');
+    Route::post('/editpassword', [AuthUserController::class, 'updatePassword'])->name('user.update-password');
+});
+// Route untuk menampilkan halaman verifikasi OTP
+Route::get('verify-otp/{member_id}', [AuthUserController::class, 'showVerifyOtpForm'])->name('user.auth.verify_otp.form');
+
+// Route untuk menangani verifikasi OTP
+Route::post('verify-otp/{member_id}', [AuthUserController::class, 'verifyOtp'])->name('user.auth.verify_otp');

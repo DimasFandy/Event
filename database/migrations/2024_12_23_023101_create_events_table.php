@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description')->nullable(); // Deskripsi event
             $table->dateTime('start_date'); // Tanggal mulai event
             $table->dateTime('end_date'); // Tanggal akhir event
-            $table->foreignId('kategori_id')->constrained('kategori')->onDelete('cascade'); // Relasi ke tabel kategori
             $table->string('status')->default('active'); // Status event
             $table->timestamps(); // Kolom created_at dan updated_at
         });

@@ -15,6 +15,7 @@ class Member extends Authenticatable
         'email',
         'phone',
         'password',
+        'photo'
     ];
     public function members()
     {
@@ -22,7 +23,8 @@ class Member extends Authenticatable
     }
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'events_member', 'member_id', 'event_id');
+        return $this->belongsToMany(Event::class, 'events_member', 'member_id', 'event_id')
+        ->withTimestamps(); // Menambahkan created_at dan updated_at otomatis;
     }
 
 }

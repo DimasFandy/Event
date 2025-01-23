@@ -32,7 +32,7 @@
     <!-- Main Stylesheet File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/notifications.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -54,7 +54,6 @@
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="{{ route('home') }}">Home</a></li>
                     <li><a href="index.html#about">About</a></li>
-                    <li><a href="index.html#speakers">Speakers</a></li>
                     <li><a href="index.html#schedule">Schedule</a></li>
                     <li><a href="index.html#supporters">supporters</a></li>
                     <li><a href="index.html#contact">Contact</a></li>
@@ -62,12 +61,23 @@
                     @auth('member')
                         <!-- Jika user login -->
                         <li class="dropdown">
-                            <a href="#" class="#" id="userMenu" data-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::guard('member')->user()->name }} <!-- Tampilkan nama user -->
+                            <a href="#" class="d-flex align-items-center justify-content-between" id="userMenu" data-toggle="dropdown" aria-expanded="false">
+                                <!-- Tampilkan Nama -->
+                                <span class="me-2">{{ Auth::guard('member')->user()->name }}</span>
+                                <!-- Tampilkan Foto Profil -->
+                                <img src="{{ asset('storage/' . Auth::guard('member')->user()->photo) }}"
+                                     alt="User Photo"
+                                     class="rounded-circle user-photo me-2">
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="userMenu">
                                 <li>
                                     <a href="{{ route('user.myevent') }}" class="dropdown-item">Event Saya</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('user.editprofile') }}" class="dropdown-item">Edit Profil</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('user.editpassword') }}" class="dropdown-item">Ubah Password</a>
                                 </li>
                                 <li>
                                     <form id="logout-form" action="{{ route('logout.user') }}" method="POST">
@@ -76,7 +86,6 @@
                                     </form>
                                 </li>
                             </ul>
-
                         </li>
                     @else
                         <!-- Jika user belum login -->

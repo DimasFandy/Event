@@ -31,7 +31,8 @@ class Event extends Model
     }
     public function members()
     {
-        return $this->belongsToMany(Member::class, 'events_member', 'event_id', 'member_id');
+        return $this->belongsToMany(Member::class, 'events_member', 'event_id', 'member_id')
+        ->withTimestamps(); // Menambahkan created_at dan updated_at otomatis;
     }
 
     public function getMembersCountAttribute()

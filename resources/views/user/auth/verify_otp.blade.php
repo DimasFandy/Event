@@ -11,7 +11,7 @@
                     <div class="card-header">{{ __('Verifikasi OTP') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('user.auth.verify_otp') }}">
+                        <form method="POST" action="{{ route('user.auth.verify_otp', ['member_id' => $memberId]) }}">
                             @csrf
                             <!-- Formulir untuk OTP -->
                             <div class="form-group row">

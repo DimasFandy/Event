@@ -22,10 +22,6 @@
                 onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
                 Simpan
             </button>
-            <a href="{{ route('events.show', ['event' => $event->id]) }}" class="btn btn-secondary" style="padding: 10px 20px; border-radius: 6px; background: linear-gradient(135deg, #6c757d, #565e64); color: #fff; border: none; text-decoration: none; transition: transform 0.2s ease;"
-                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
-                Batal
-            </a>
         </div>
     </form>
 </div>

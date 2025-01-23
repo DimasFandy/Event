@@ -8,7 +8,6 @@
     <div class="container mt-4">
         <h1 class="mb-4 text-center text-primary">Members List</h1>
 
-
         @can('create_member')
             <!-- Tombol Create -->
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -17,7 +16,6 @@
                 </a>
             </div>
         @endcan
-
 
         <!-- Table -->
         <div class="table-responsive">
@@ -28,6 +26,7 @@
                         <th class="text-center" style="background-color: #007bff; color: white;">Name</th>
                         <th class="text-center" style="background-color: #28a745; color: white;">Email</th>
                         <th class="text-center" style="background-color: #ffc107; color: black;">Phone</th>
+                        <th class="text-center" style="background-color: #17a2b8; color: white;">Photo</th> <!-- Kolom Foto -->
                         <th class="text-center" style="background-color: #dc3545; color: white;">Actions</th>
                     </tr>
                 </thead>
@@ -76,6 +75,20 @@
                         data: 'phone',
                         name: 'phone',
                         className: 'text-center'
+                    },
+                    {
+                        data: 'photo',  // Kolom Foto
+                        name: 'photo',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            if (data) {
+                                return '<img src="' + '{{ asset("storage/") }}' + '/' + data + '" alt="Photo" width="50" height="50">';
+                            } else {
+                                return '<span>No Image</span>';
+                            }
+                        }
                     },
                     {
                         data: 'aksi',

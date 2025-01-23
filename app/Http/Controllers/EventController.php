@@ -7,6 +7,7 @@ use App\Models\Kategori; // Tambahkan model Kategori
 use App\Models\EventMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EventController extends Controller
 {
@@ -48,7 +49,7 @@ class EventController extends Controller
         // Kembalikan tampilan dengan data kategori dan events
         return view('admin.events.index', compact('events', 'categories'));
     }
-    
+
 
     //method untuk halaman user.home
     public function showEvents()
@@ -248,6 +249,15 @@ class EventController extends Controller
         // Kirim data event dan member ke view 'myevent'
         return view('user.myevent', compact('events', 'member'));
     }
+    public function exportPdf($event_id)
+    {
+        $event = Event::with('kategori')->findOrFail($event_id);
+        $members = $event->members;
 
+        $pdf = Pdf::loadView('admin.events.pdf', compact('event', 'members'));
 
+        return $pdf->stream('event-detail-' . $event->id . '.pdf');
+    }
+
+    
 }

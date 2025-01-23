@@ -5,6 +5,25 @@
     <link href="{{ asset('css/editprofile.css') }}" rel="stylesheet">
 
     <div class="container1 mt-5 pt-5">
+        @if(session('success'))
+            <!-- Modal Success -->
+            <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Profile Updated Successfully</h5>
+                        </div>
+                        <div class="modal-body">
+                            Password berhasil di update. <b>klik dimana saja untuk menutup. Terima Kasih</b>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ route('user.home') }}" class="btn btn-primary">Go to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card edit-profile-card mb-5">
@@ -84,7 +103,6 @@
                                 </div>
                             </div>
 
-
                             <!-- Tombol Submit -->
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -99,4 +117,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Show modal if success message exists
+        document.addEventListener('DOMContentLoaded', function () {
+            if ("{{ session('success') ? 'true' : 'false' }}") {
+                var successModal = new bootstrap.Modal(document.getElementById('successModal'), {});
+                successModal.show();
+            }
+        });
+    </script>
 @endsection
