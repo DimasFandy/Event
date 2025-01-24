@@ -96,84 +96,43 @@
     align-items: center;
     justify-content: center;
 }
-/* css untuk card di halaman dashboard */
-.card {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease, transform 0.3s ease-in-out;
+ /* Styling untuk card */
+ .animated-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+}
+
+.animated-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Chart container styling */
+.chart-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+}
+
+/* Canvas Styling */
+.chart-container canvas {
+    width: 100%; /* Sesuaikan dengan ukuran container */
+    height: 100%; /* Sesuaikan dengan ukuran container */
+    padding: 20px;
+    display: block;
+}
+
+/* Tooltip Styling (Chart.js) */
+.chartjs-tooltip {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
     border-radius: 8px;
+    padding: 10px;
 }
-
-.card:hover {
-    transform: translateY(-10px) scale(1.05); /* Tambahkan efek zoom */
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+canvas {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin: 20px auto;
+    display: block;
 }
-
-.card-header {
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-}
-
-.card-body {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 0;
-    animation: fadeInUp 1s ease-out forwards; /* Animasi fade in untuk card body */
-}
-
-.display-4 {
-    font-size: 3rem;
-    font-weight: bold;
-    line-height: 1.2;
-}
-
-.list-group-item {
-    border-radius: 0;
-    padding: 12px;
-    font-size: 1.1rem;
-}
-
-.animated-card {
-    animation: fadeInUp 1s ease-out;
-}
-
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Animasi zoom dan shadow saat hover */
-@keyframes cardZoom {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Equal height for cards */
-.equal-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.equal-card .card-body {
-    flex-grow: 1;
-}
-
-/* Responsiveness */
-@media (max-width: 767px) {
-    .card-body {
-        padding: 1rem;
-    }
-    .display-4 {
-        font-size: 2.5rem;
-    }
-}
-

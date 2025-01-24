@@ -3,11 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <div class="container mt-4">
         <div class="row mt-4">
             <!-- Total Members Card -->
-            <div class="col-md-3">
-                <div class="card text-white bg-info mb-3 animated-card">
+             <!-- Total Members Card -->
+             <div class="col-md-3">
+                <div class="card text-white bg-info mb-3 animated-card shadow-sm">
                     <div class="card-header">Total Members</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $memberCount }}</h5>
@@ -18,7 +20,7 @@
 
             <!-- Total Events Card -->
             <div class="col-md-3">
-                <div class="card text-white bg-success mb-3 animated-card">
+                <div class="card text-white bg-success mb-3 animated-card shadow-sm">
                     <div class="card-header">Total Events</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $eventCount }}</h5>
@@ -29,7 +31,7 @@
 
             <!-- Members Registered for Events Card -->
             <div class="col-md-3">
-                <div class="card text-white bg-warning mb-3 animated-card">
+                <div class="card text-white bg-warning mb-3 animated-card shadow-sm">
                     <div class="card-header">Members Registered for Events</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $registeredMembersCount }}</h5>
@@ -40,7 +42,7 @@
 
             <!-- Completed Events Card -->
             <div class="col-md-3">
-                <div class="card text-white bg-danger mb-3 animated-card">
+                <div class="card text-white bg-danger mb-3 animated-card shadow-sm">
                     <div class="card-header">Completed Events</div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $completedEventsCount }}</h5>
@@ -48,28 +50,34 @@
                     </div>
                 </div>
             </div>
+        </div>
 
         </div>
 
         <!-- Chart.js Data -->
         <div class="row mt-4">
             <div class="col-md-6">
-                <canvas id="eventChart"></canvas>
+                <div class="chart-container p-3 shadow-sm">
+                    <canvas id="eventChart"></canvas>
+                </div>
             </div>
             <div class="col-md-6">
-                <canvas id="membersChart"></canvas>
+                <div class="chart-container p-3 shadow-sm">
+                    <canvas id="membersChart"></canvas>
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-md-6">
-                <canvas id="interestChart"></canvas> <!-- Canvas untuk chart persentase peminat -->
+                <div class="chart-container p-3 shadow-sm">
+                    <canvas id="interestChart"></canvas>
+                </div>
             </div>
         </div>
 
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-
 
         <script>
             // Membuat chart untuk jumlah event per bulan
@@ -238,78 +246,71 @@
 
 
             // Membuat chart untuk persentase peminat per event
-            var interestCtx = document.getElementById('interestChart').getContext('2d');
-            var interestChart = new Chart(interestCtx, {
-                type: 'doughnut', // Doughnut chart untuk persentase
-                data: {
-                    labels: @json($eventsWithInterestPercentage->pluck('event_name')->toArray()), // Nama event
-                    datasets: [{
-                        label: 'Interest Percentage per Event',
-                        data: @json($eventsWithInterestPercentage->pluck('interest_percentage')->toArray()), // Pastikan data ini dalam bentuk nilai mentah, bukan persentase
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(153, 102, 255, 0.5)',
-                            'rgba(255, 159, 64, 0.5)',
-                            'rgba(255, 99, 132, 0.5)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
+var interestCtx = document.getElementById('interestChart').getContext('2d');
+var interestChart = new Chart(interestCtx, {
+    type: 'doughnut', // Doughnut chart untuk persentase
+    data: {
+        labels: @json($eventsWithInterestPercentage->pluck('event_name')->toArray()), // Nama event
+        datasets: [{
+            label: 'Interest Percentage per Event',
+            data: @json($eventsWithInterestPercentage->pluck('interest_percentage')->toArray()), // Data nilai mentah
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)',
+                'rgba(255, 99, 132, 0.5)'
+            ],
+            borderColor: 'transparent', // Hilangkan border
+            borderWidth: 0 // Set lebar border ke 0
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true, // Menampilkan judul
+                text: 'Persentase Peminat per Event', // Judul chart
+                font: {
+                    size: 16, // Ukuran font
+                    weight: 'bold' // Berat font
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true, // Menampilkan judul
-                            text: 'Persentase Peminat per Event', // Judul chart
-                            font: {
-                                size: 16, // Ukuran font
-                                weight: 'bold' // Berat font
-                            },
-                            padding: {
-                                top: 70, // Padding atas untuk memberi jarak antara judul dan chart
-                                bottom: 0 // Padding bawah untuk memberi jarak antara judul dan chart
-                            }
-                        },
-                        legend: {
-                            position: 'right', // Menempatkan legend di samping kanan chart
-                            labels: {
-                                boxWidth: 20, // Ukuran kotak warna di legend
-                                padding: 15 // Jarak antara kotak warna dan label
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    let value = context.raw || 0;
-                                    let total = context.chart.data.datasets[0].data.reduce((a, b) => a + b,
-                                        0); // Total nilai data
-                                    let percentage = ((value / total) * 100).toFixed(2); // Hitung persentase
-                                    return `${label}: ${percentage}%`; // Tampilkan persentase
-                                }
-                            }
-                        },
-                        datalabels: {
-                            color: '#000', // Warna teks
-                            font: {
-                                weight: 'bold' // Berat font
-                            },
-                            formatter: function(value, context) {
-                                let total = context.chart.data.datasets[0].data.reduce((a, b) => a + b,
-                                    0); // Total nilai data
-                                let percentage = ((value / total) * 100).toFixed(0); // Hitung persentase
-                                return percentage + '%'; // Menampilkan persentase di dalam chart
-                            }
-                        }
+                padding: {
+                    top: 70, // Padding atas untuk memberi jarak antara judul dan chart
+                    bottom: 0 // Padding bawah untuk memberi jarak antara judul dan chart
+                }
+            },
+            legend: {
+                position: 'right', // Menempatkan legend di samping kanan chart
+                labels: {
+                    boxWidth: 20, // Ukuran kotak warna di legend
+                    padding: 15 // Jarak antara kotak warna dan label
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        let value = context.raw || 0;
+                        let total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0); // Total nilai data
+                        let percentage = ((value / total) * 100).toFixed(2); // Hitung persentase
+                        return `${label}: ${percentage}%`; // Tampilkan persentase
                     }
+                }
+            },
+            datalabels: {
+                color: '#000', // Warna teks
+                font: {
+                    weight: 'bold' // Berat font
                 },
-                plugins: [ChartDataLabels] // Menambahkan plugin dataLabels
-            });
+                formatter: function(value, context) {
+                    let total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0); // Total nilai data
+                    let percentage = ((value / total) * 100).toFixed(0); // Hitung persentase
+                    return percentage + '%'; // Menampilkan persentase di dalam chart
+                }
+            }
+        }
+    },
+    plugins: [ChartDataLabels] // Menambahkan plugin dataLabels
+});
         </script>
     @endsection
