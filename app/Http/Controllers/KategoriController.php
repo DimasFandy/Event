@@ -99,11 +99,19 @@ class KategoriController extends Controller
             // Ambil data kategori
             $categories = DB::table('kategori')
                 ->select('id', 'name')
-                ->get();
+                ->get()
+                ->map(function ($category) {
+                    $category->type = 'kategori'; // Tambahkan type untuk pembeda
+                    return $category;
+                });
 
             // Ambil data events
             $events = Event::select('id', 'name')
-                ->get();
+                ->get()
+                ->map(function ($event) {
+                    $event->type = 'event'; // Tambahkan type untuk pembeda
+                    return $event;
+                });
 
             // Gabungkan kategori dan events dalam satu array
             $data = $categories->merge($events);
@@ -114,21 +122,27 @@ class KategoriController extends Controller
         }
     }
 
+
     // Mendapatkan data yang sudah difilter berdasarkan kategori
     public function getFilteredData(Request $request)
     {
         try {
-            $values = $request->input('values', []);
+            // Ambil kategori_id dari input
+            $kategoriIds = $request->input('values', []);
 
-            if (empty($values)) {
-                return response()->json(['error' => 'No values provided'], 400);
+            if (empty($kategoriIds)) {
+                return response()->json(['error' => 'No categories selected'], 400);
             }
 
-            // Ambil data berdasarkan filter
-            $kategoris = Kategori::whereIn('id', $values)->get();
+            // Ambil data events yang terkait dengan kategori yang difilter
+            $filteredData = Event::whereHas('kategori', function ($query) use ($kategoriIds) {
+                $query->whereIn('kategori_id', $kategoriIds);
+            })
+                ->select('id', 'name', 'start_date', 'end_date', 'description') // Pastikan kolom ini ada di tabel
+                ->get();
 
-            // Render view untuk tabel
-            $html = view('partials.kategori_table', compact('kategoris'))->render();
+            // Render view untuk data yang difilter
+            $html = view('admin.partials.filtered_data', compact('filteredData'))->render();
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {
@@ -136,6 +150,4 @@ class KategoriController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
-
 }

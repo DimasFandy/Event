@@ -113,3 +113,6 @@ Route::get('verify-otp/{member_id}', [AuthUserController::class, 'showVerifyOtpF
 
 // Route untuk menangani verifikasi OTP
 Route::post('verify-otp/{member_id}', [AuthUserController::class, 'verifyOtp'])->name('user.auth.verify_otp');
+
+
+Route::get('/schedule', [HomeController::class, 'showSchedule']);

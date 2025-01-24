@@ -27,40 +27,40 @@ class AuthUserController extends Controller
 
     // Handle user login
     public function login(Request $request)
-{
-    // Validasi form login
-    $request->validate([
-        'phone' => 'required|digits_between:10,15',
-        'password' => 'required|min:8',
-    ]);
+    {
+        // Validasi form login
+        $request->validate([
+            'phone' => 'required|digits_between:10,15',
+            'password' => 'required|min:8',
+        ]);
 
-    // Cek apakah user ada di database berdasarkan nomor HP
-    $member = Member::where('phone', $request->phone)->first();
+        // Cek apakah user ada di database berdasarkan nomor HP
+        $member = Member::where('phone', $request->phone)->first();
 
-    // Verifikasi jika user ada
-    if ($member) {
-        // Cek apakah password sesuai
-        if (Hash::check($request->password, $member->password)) {
+        // Verifikasi jika user ada
+        if ($member) {
+            // Cek apakah password sesuai
+            if (Hash::check($request->password, $member->password)) {
 
-            // Generate dan simpan OTP di session
-            $otp = rand(100000, 999999); // Buat OTP acak 6 digit
-            Session::put('otp', $otp);
-            Session::put('member_id', $member->id);
+                // Generate dan simpan OTP di session
+                $otp = rand(100000, 999999); // Buat OTP acak 6 digit
+                Session::put('otp', $otp);
+                Session::put('member_id', $member->id);
 
-            // Kirim OTP melalui WhatsApp
-            app(WhatsappController::class)->sendWhatsappMessage($member->phone, $member->name, $otp);
+                // Kirim OTP melalui WhatsApp
+                app(WhatsappController::class)->sendWhatsappMessage($member->phone, $member->name, $otp);
 
-            // Redirect ke halaman verifikasi OTP
-            return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id]);
+                // Redirect ke halaman verifikasi OTP
+                return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id]);
+            }
+
+            // Password salah
+            return back()->withErrors(['password' => 'Password salah'])->withInput();
         }
 
-        // Password salah
-        return back()->withErrors(['password' => 'Password salah'])->withInput();
+        // Nomor HP tidak valid
+        return back()->withErrors(['phone' => 'Nomor HP tidak ditemukan'])->withInput();
     }
-
-    // Nomor HP tidak valid
-    return back()->withErrors(['phone' => 'Nomor HP tidak ditemukan'])->withInput();
-}
 
 
 
@@ -77,34 +77,44 @@ class AuthUserController extends Controller
     }
 
     public function register(Request $request)
-{
-    // Validasi form registrasi
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'phone' => 'required|digits_between:10,15|unique:members,phone',
-        'password' => 'required|confirmed|min:8',
-    ]);
+    {
+        // Validasi form registrasi
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:members,email',
+            'phone' => 'required|digits_between:10,15|unique:members,phone',
+            'password' => 'required|confirmed|min:8',
+        ]);
 
-    // Membuat data pengguna baru di tabel member
-    $member = Member::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-        'password' => Hash::make($request->password),
-    ]);
+        try {
+            // Membuat data pengguna baru di tabel member
+            $member = Member::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => Hash::make($request->password),
+            ]);
 
-    // Generate dan simpan OTP di session
-    $otp = rand(100000, 999999); // Buat OTP acak 6 digit
-    Session::put('otp', $otp);
-    Session::put('member_id', $member->id);
+            // Generate dan simpan OTP di session
+            $otp = rand(100000, 999999); // Buat OTP acak 6 digit
+            Session::put('otp', $otp);
+            Session::put('member_id', $member->id);
 
-    // Kirim OTP melalui WhatsApp
-    app(WhatsappController::class)->sendWhatsappMessage($member->phone, $member->name, $otp);
+            // Kirim OTP melalui WhatsApp
+            app(WhatsappController::class)->sendWhatsappMessage($member->phone, $member->name, $otp);
 
-    // Redirect ke halaman verifikasi OTP
-    return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id]);
-}
+            // Redirect ke halaman verifikasi OTP
+            return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id]);
+        } catch (QueryException $e) {
+            // Tangkap error duplicate entry
+            if ($e->errorInfo[1] == 1062) { // Kode error MySQL untuk duplicate entry
+                return back()->withErrors(['duplicate' => 'Email atau nomor telepon sudah terdaftar.'])->withInput();
+            }
+
+            // Tangkap error lain
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat registrasi. Silakan coba lagi.'])->withInput();
+        }
+    }
 
 
     public function editProfile()
@@ -226,6 +236,4 @@ class AuthUserController extends Controller
         // OTP salah
         return back()->withErrors(['otp' => 'Kode OTP salah']);
     }
-
-
 }

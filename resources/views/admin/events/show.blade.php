@@ -5,7 +5,7 @@
 
     <div class="d-flex justify-content-between mb-4">
         <a href="{{ route('events.members.create', ['event_id' => $event->id]) }}" class="btn btn-primary"><img width="20" height="20" src="https://img.icons8.com/ultraviolet/50/add-user-group-woman-man.png" alt="add-user-group-woman-man"/> Tambah Peserta</a>
-        <a href="{{ route('events.export_pdf', ['event_id' => $event->id]) }}" class="btn btn-success"><img width="20" height="20" src="https://img.icons8.com/fluency/48/ms-excel.png" alt="ms-excel"/> Export ke PDF</a>
+        <a href="{{ route('events.export_pdf', ['event_id' => $event->id]) }}" class="btn btn-success"><img width="20" height="20" src="https://img.icons8.com/arcade/64/ms-word.png" alt="ms-word"/> Export ke PDF</a>
     </div>
 
     <div class="table-responsive">

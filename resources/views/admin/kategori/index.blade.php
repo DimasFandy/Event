@@ -22,11 +22,21 @@
         @endcan
 
         <!-- Filter Section -->
-        <h6 class="text-muted">Filter Kategori</h6>
-        <form id="filterForm" class="mb-4">
-            <label for="filterSelect" class="form-label">Pilih Kategori</label>
-            <select id="filterSelect" class="form-select" multiple="multiple"></select>
-        </form>
+        <div class="filter-section p-4 bg-light rounded shadow-sm">
+            <h6 class="text-primary fw-bold mb-3">Filter Kategori</h6>
+            <form id="filterForm" class="mb-4">
+                <label for="filterSelect" class="form-label text-secondary">Pilih Kategori</label>
+                <select id="filterSelect" class="form-select border-primary shadow-sm" multiple="multiple"
+                    style="height: 150px;">
+
+                </select>
+
+            </form>
+        </div>
+
+
+        <!-- Tempat untuk hasil filter -->
+        <div id="filteredResults" class="row mt-4"></div>
 
         <table class="table mt-3" style="font-family: 'Merriweather Sans', sans-serif;">
             <thead>
@@ -122,7 +132,17 @@
         // Fetch filtered data on change
         $('#filterSelect').on('change', function() {
             const selectedValues = $(this).val();
-            fetchFilteredData(selectedValues);
+            console.log("Selected Values: ", selectedValues); // Debugging selected values
+
+            // Check if any category is selected
+            if (selectedValues && selectedValues.length > 0) {
+                fetchFilteredData(selectedValues);
+            } else {
+                console.error('No categories selected');
+                $('#filteredResults').html(
+                    '<p class="text-muted">No categories selected.</p>'
+                    ); // Optional message to the user
+            }
         });
 
         function fetchFilteredData(selectedValues) {
@@ -134,10 +154,20 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    $('#kategoriTableBody').html(response.html || '');
+                    console.log("Response from server: ", response); // Debugging response
+                    if (response.html) {
+                        $('#filteredResults').html(response.html); // Render hasil filter
+                    } else {
+                        console.error('No HTML data in response.');
+                        $('#filteredResults').html(
+                            '<p class="text-danger">Error fetching data.</p>');
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching data:', error);
+                    console.error('Response:', xhr.responseText); // Display more error details
+                    $('#filteredResults').html(
+                        '<p class="text-danger">An error occurred while fetching data.</p>');
                 }
             });
         }
