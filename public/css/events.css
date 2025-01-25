@@ -2,19 +2,36 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
+    color: #333;
 }
 
 /* Optional: Style table headings and cells */
-.table th, .table td {
+.table th {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    background-color:rgb(0, 183, 255); /* Gradient for table headers */
+    color: white;
+    padding: 10px;
+}
+
+.table td {
     font-family: 'Roboto', sans-serif;
     font-weight: 400; /* Regular weight */
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
 
 /* Customize the title text */
 h1, .text-primary {
     font-family: 'Roboto', sans-serif;
-    font-weight: 700; /* Bold weight for headings */
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff6a00, #ee0979); /* Gradient text */
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
 }
+
 /* Table and Row Styling */
 .table-responsive {
     overflow-x: auto;
@@ -25,7 +42,7 @@ h1, .text-primary {
 }
 
 .table-hover tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #e6f7ff; /* Lighter blue when hovered */
     transition: background-color 0.3s ease;
 }
 
@@ -37,19 +54,27 @@ h1, .text-primary {
 /* Badge styling */
 .badge {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 400;
     padding: 5px 10px;
     border-radius: 10px;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b); /* Gradient badge */
+    color: white;
 }
 
 /* Button hover animation */
 .event-action-btn {
     transition: transform 0.2s ease, background-color 0.3s ease;
+    background: linear-gradient(45deg, #ff6a00, #ee0979); /* Gradient background for buttons */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 .event-action-btn:hover {
     transform: scale(1.1);
     background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Hover effect for action buttons */
@@ -57,6 +82,8 @@ h1, .text-primary {
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Table width adjustments */
 .table th:nth-child(6), .table td:nth-child(6) {
     width: 15%;
 }
