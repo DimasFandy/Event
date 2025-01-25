@@ -15,9 +15,10 @@ class MemberController extends Controller
     public function __construct()
     {
         $this->middleware(['permission:create_member'])->only(['create', 'store']);
-        $this->middleware(['permission:edit_member'])->only(['edit', 'show']);
+        $this->middleware(['permission:edit_member'])->only(['edit', 'update']);
         $this->middleware(['permission:read_member'])->only(['read', 'show']);
         $this->middleware(['permission:delete_member'])->only(['destroy', 'delete']);
+        $this->middleware(['permission:ganti_passwordmember'])->only(['editPassword', 'updatePassword']);
     }
 
     public function index(Request $request)
@@ -29,19 +30,33 @@ class MemberController extends Controller
                 return DataTables::of($members)
                     ->addIndexColumn()
                     ->addColumn('aksi', function ($row) {
-                        return '
-                        <a href="/members/' . $row->id . '" class="btn btn-info btn-sm">Show</a>
-                        <a href="/members/' . $row->id . '/edit" class="btn btn-warning btn-sm">Edit</a>
-                <a href="' . route('members.editPassword', $row->id) . '" class="btn btn-primary btn-sm">Change Password</a>
-                        <button onclick="confirmDelete(' . $row->id . ')" class="btn btn-danger btn-sm">Delete</button>
-                    ';
+                        $buttons = '';
+
+                        // Show button with permission check
+                        if (auth()->user()->can('read_member')) {
+                            $buttons .= '<a href="/members/' . $row->id . '" class="btn btn-info btn-sm">Show</a>';
+                        }
+
+                        if (auth()->user()->can('edit_member')) {
+                            $buttons .= '<a href="/members/' . $row->id . '/edit" class="btn btn-warning btn-sm mx-1">Edit</a>';
+                        }
+
+                        if (auth()->user()->can('ganti_passwordmember')) {
+                            $buttons .= '<a href="' . route('members.editPassword', $row->id) . '" class="btn btn-primary btn-sm ">Change Password</a>';
+                        }
+
+                        if (auth()->user()->can('delete_member')) {
+                            $buttons .= '<button onclick="confirmDelete(' . $row->id . ')" class="btn btn-danger btn-sm mx-1">Delete</button>';
+                        }
+
+                        return $buttons;
                     })
                     ->addColumn('image', function ($row) {
                         if ($row->photo) {
-                            // Jika ada foto, tampilkan gambar
+                            // If there is a photo, display the image
                             return '<img src="' . asset('storage/' . $row->profile_photos) . '" alt="Photo" width="50" height="50">';
                         } else {
-                            // Jika tidak ada foto, tampilkan teks atau placeholder
+                            // If no photo, display text or a placeholder
                             return '<span>No Image</span>';
                         }
                     })
@@ -51,6 +66,7 @@ class MemberController extends Controller
                 return response()->json(['error' => $e->getMessage()], 500);
             }
         }
+
 
         return view('admin.members.index');
     }

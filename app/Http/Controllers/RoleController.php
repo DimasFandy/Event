@@ -13,7 +13,7 @@ class RoleController extends Controller
 {
     // examples:
     $this->middleware(['permission:create_role'])->only(['create','store']);
-    $this->middleware(['permission:edit_role'])->only(['edit','show']);
+    $this->middleware(['permission:edit_role'])->only(['edit','update']);
     $this->middleware(['permission:read_role'])->only(['read','show']);
     $this->middleware(['permission:delete_role'])->only(['destroy','delete']);
 }

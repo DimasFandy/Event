@@ -12,7 +12,7 @@
     @section('content')
         <div class="container">
             <h1 class="mb-4" style="font-family: 'Poppins', sans-serif; color: #007bff;">
-                <i class="bi bi-list-ul"></i> Daftar Kategori
+                 Daftar Kategori
             </h1>
 
             @can('create_kategori')

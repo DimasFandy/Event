@@ -12,7 +12,7 @@ class KategoriController extends Controller
     public function __construct()
     {
         $this->middleware(['permission:create_kategori'])->only(['create', 'store']);
-        $this->middleware(['permission:edit_kategori'])->only(['edit', 'show']);
+        $this->middleware(['permission:edit_kategori'])->only(['edit', 'update']);
         $this->middleware(['permission:read_kategori'])->only(['read', 'show']);
         $this->middleware(['permission:delete_kategori'])->only(['destroy', 'delete']);
     }

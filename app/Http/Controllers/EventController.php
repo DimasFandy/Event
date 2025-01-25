@@ -15,9 +15,10 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware(['permission:create_event'])->only(['create', 'store']);
-        $this->middleware(['permission:edit_event'])->only(['edit', 'show']);
+        $this->middleware(['permission:edit_event'])->only(['edit', 'update']);
         $this->middleware(['permission:read_event'])->only(['read', 'show']);
         $this->middleware(['permission:delete_event'])->only(['destroy', 'delete']);
+        $this->middleware(['permission:export_pdf'])->only(['exportPdf']);
     }
 
     // Menampilkan daftar event dengan pagination
