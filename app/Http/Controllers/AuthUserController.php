@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -82,8 +82,15 @@ class AuthUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:members,email',
-            'phone' => 'required|digits_between:10,15|unique:members,phone',
+            'phone' => [
+                'required',
+                'digits_between:10,15',
+                'unique:members,phone',
+                'regex:/^(?!123456789|000000000|111111111|999999999).+$/'
+            ],
             'password' => 'required|confirmed|min:8',
+        ], [
+            'phone.regex' => 'Nomor telepon tidak boleh berupa nomor tidak valid seperti 123456789 atau angka berulang.'
         ]);
 
         try {
@@ -115,6 +122,7 @@ class AuthUserController extends Controller
             return back()->withErrors(['error' => 'Terjadi kesalahan saat registrasi. Silakan coba lagi.'])->withInput();
         }
     }
+
 
 
     public function editProfile()

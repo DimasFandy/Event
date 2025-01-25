@@ -4,11 +4,15 @@
     <h1 class="mb-4 text-primary">Detail Event</h1>
 
     <div class="d-flex justify-content-between mb-4">
-        <a href="{{ route('events.members.create', ['event_id' => $event->id]) }}" class="btn btn-primary"><img width="20" height="20" src="https://img.icons8.com/ultraviolet/50/add-user-group-woman-man.png" alt="add-user-group-woman-man"/> Tambah Peserta</a>
-        <a href="{{ route('events.export_pdf', ['event_id' => $event->id]) }}" class="btn btn-success"><img width="20" height="20" src="https://img.icons8.com/arcade/64/ms-word.png" alt="ms-word"/> Export ke PDF</a>
+        <a href="{{ route('events.members.create', ['event_id' => $event->id]) }}" class="btn btn-primary">
+            <img width="20" height="20" src="https://img.icons8.com/ultraviolet/50/add-user-group-woman-man.png" alt="add-user-group-woman-man"/> Tambah Peserta
+        </a>
+        <a href="{{ route('events.export_pdf', ['event_id' => $event->id]) }}" class="btn btn-success">
+            <img width="20" height="20" src="https://img.icons8.com/arcade/64/ms-word.png" alt="ms-word"/> Export PDF
+        </a>
     </div>
 
-    <div class="table-responsive">
+    <div class="table-responsive mb-4">
         <table class="table table-bordered table-striped">
             <tr>
                 <th>Nama:</th>
@@ -31,15 +35,15 @@
             </tr>
             <tr>
                 <th>Tanggal Mulai:</th>
-                <td>{{ $event->start_date }}</td>
+                <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d M Y H:i') }}</td>
             </tr>
             <tr>
                 <th>Tanggal Selesai:</th>
-                <td>{{ $event->end_date }}</td>
+                <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d M Y H:i') }}</td>
             </tr>
             <tr>
                 <th>Status:</th>
-                <td>{{ $event->status }}</td>
+                <td>{{ ucfirst($event->status) }}</td>
             </tr>
             <tr>
                 <th>Jumlah Peserta:</th>
@@ -51,7 +55,7 @@
     <div class="mt-4">
         <h4 class="text-primary">Peserta yang Terdaftar:</h4>
         @if ($members->isEmpty())
-            <p>Tidak ada peserta terdaftar untuk event ini.</p>
+            <p class="text-muted">Tidak ada peserta terdaftar untuk event ini.</p>
         @else
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
@@ -134,7 +138,7 @@
             const memberName = button.getAttribute('data-member-name');
             const eventId = deleteModal.getAttribute('data-event-id');
 
-            // Set action URL untuk form
+            // Set action URL for form
             const deleteForm = document.getElementById('deleteForm');
             deleteForm.setAttribute('action', `/events/${eventId}/members/${memberId}`);
 

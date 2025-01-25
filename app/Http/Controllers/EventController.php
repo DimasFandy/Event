@@ -39,7 +39,7 @@ class EventController extends Controller
         }
 
         // Ambil events dengan pagination
-        $events = $eventsQuery->paginate(8);
+        $events = $eventsQuery->paginate(5);
 
         // Tambahkan jumlah peserta setelah pagination
         $events->getCollection()->transform(function ($event) {

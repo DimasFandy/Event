@@ -9,21 +9,6 @@
         margin-bottom: 10px;
     }
 
-    /* Gaya untuk container chart */
-    .chart-card {
-        width: 100%; /* Pastikan lebar penuh */
-        max-width: 450px; /* Ukuran maksimum */
-        height: 400px; /* Konsisten dengan canvas */
-        display: flex;
-        justify-content: center; /* Memusatkan canvas */
-        align-items: center;
-        padding: 10px;
-        box-sizing: border-box; /* Pastikan padding tidak memengaruhi ukuran */
-        background: linear-gradient(135deg, #58abff, #050505);
-        border-radius: 40px 100px;
-    }
-
-
     .chart-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -51,7 +36,54 @@
             align-items: center;
         }
     }
+/* Custom Card */
+.custom-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffffff, #f2f2f2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.custom-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Gradient Header */
+.gradient-header {
+    padding: 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(90deg, #36d1dc, #5b86e5);
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    border-bottom: none;
+}
+
+/* Card Body */
+.card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555555;
+}
+
+/* Shadow Effects */
+.shadow-lg {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
 
 .member-photos {
     display: flex;
@@ -109,7 +141,7 @@
 
 /* Chart container styling */
 .chart-container {
-    background-color: #ffffff;
+    background-color: #b8b8b8;
     border-radius: 12px;
 }
 
@@ -119,6 +151,7 @@
     height: 100%; /* Sesuaikan dengan ukuran container */
     padding: 20px;
     display: block;
+    background-color: rgb(255, 255, 255);
 }
 
 /* Tooltip Styling (Chart.js) */
@@ -135,4 +168,14 @@ canvas {
     border-radius: 10px;
     margin: 20px auto;
     display: block;
+}
+/* Ubah ukuran canvas menjadi persegi panjang */
+#interestChart {
+    width: 600px; /* Lebar lebih besar */
+    height: 300px; /* Tinggi lebih kecil */
+}
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

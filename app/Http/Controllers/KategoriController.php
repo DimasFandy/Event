@@ -49,7 +49,7 @@ class KategoriController extends Controller
     // Menampilkan detail kategori
     public function show(Kategori $kategori)
     {
-        return view('admin.kategoris.show', compact('kategori'));
+        return view('admin.kategori.show', compact('kategori'));
     }
 
     // Menampilkan form untuk mengedit kategori

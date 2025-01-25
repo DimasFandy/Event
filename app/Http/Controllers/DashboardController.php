@@ -12,74 +12,97 @@ use Illuminate\Support\Carbon;
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    {
-        // Ambil data umum
-        $kategoris = Kategori::all();
-        $events = Event::all();
-        $members = Member::all();
+{
+    // Ambil data umum
+    $kategoris = Kategori::all();
+    $events = Event::with('members')->get(); // Pastikan relasi dengan members dimuat
+    $members = Member::all();
 
-        // Menghitung jumlah anggota
-        $memberCount = $members->count();
+    // Menghitung jumlah anggota
+    $memberCount = $members->count();
 
-        // Menghitung jumlah event
-        $eventCount = $events->count();
+    // Menghitung jumlah event
+    $eventCount = $events->count();
 
-        // Menghitung jumlah member yang terdaftar untuk event tertentu
-        $registeredMembersCount = $events->flatMap(function ($event) {
+    // Menghitung jumlah member yang terdaftar untuk event tertentu
+    $registeredMembersCount = $events->flatMap(function ($event) {
+        return $event->members;
+    })->count();
+
+    // Menghitung jumlah event yang sudah selesai (berdasarkan tanggal)
+    $completedEventsCount = $events->filter(function ($event) {
+        return Carbon::parse($event->date)->isPast();
+    })->count();
+
+    // Analisis data - Jumlah event per bulan
+    $eventsPerMonth = $events->groupBy(function ($event) {
+        return Carbon::parse($event->date)->format('F Y');
+    })->map(function ($group) {
+        return $group->count();
+    });
+
+    // Data jumlah members yang terdaftar per bulan
+    $membersPerMonth = $events->groupBy(function ($event) {
+        return Carbon::parse($event->date)->format('F Y');
+    })->map(function ($group) {
+        return $group->flatMap(function ($event) {
             return $event->members;
         })->count();
+    });
 
-        // Menghitung jumlah event yang sudah selesai (berdasarkan tanggal)
-        $completedEventsCount = $events->filter(function ($event) {
-            return Carbon::parse($event->date)->isPast();
+    // Data bulan-bulan selanjutnya (next months)
+    $nextMonths = collect();
+    $nextMembers = collect(); // Tambahkan variabel untuk jumlah member bulan mendatang
+    for ($i = 1; $i <= 3; $i++) {  // Ambil data untuk 3 bulan ke depan
+        $nextMonth = Carbon::now()->addMonth($i);
+        $monthLabel = $nextMonth->format('F Y');
+
+        // Jumlah event bulan mendatang
+        $nextMonths[$monthLabel] = $events->filter(function ($event) use ($nextMonth) {
+            return Carbon::parse($event->date)->isSameMonth($nextMonth);
         })->count();
 
-        // Analisis data - Contoh: jumlah event per bulan
-        $eventsPerMonth = $events->groupBy(function ($event) {
-            return Carbon::parse($event->date)->format('F Y');
-        })->map(function ($group) {
-            return $group->count();
-        });
-
-        // Data bulan-bulan selanjutnya (next months)
-        $nextMonths = collect();
-        for ($i = 1; $i <= 3; $i++) {  // Ambil data untuk 3 bulan ke depan
-            $nextMonth = Carbon::now()->addMonth($i);
-            $monthLabel = $nextMonth->format('F Y');
-            $nextMonths[$monthLabel] = $events->filter(function ($event) use ($nextMonth) {
-                return Carbon::parse($event->date)->isSameMonth($nextMonth);
-            })->count();
-        }
-
-        // Data untuk jumlah member terdaftar per event
-        $eventsWithMembers = $events->map(function ($event) {
-            return [
-                'event_name' => $event->name, // Nama event
-                'member_count' => $event->members->count(), // Jumlah member terdaftar
-                'total_capacity' => $event->capacity, // Misal, menggunakan kapasitas maksimal event
-            ];
-        });
-        // Menghitung persentase peminat per event
-        $eventsWithInterestPercentage = $eventsWithMembers->map(function ($event) {
-            $percentage = ($event['member_count'] / max($event['total_capacity'], 1)) * 100; // Hindari pembagian dengan 0
-            return [
-                'event_name' => $event['event_name'],
-                'interest_percentage' => round($percentage, 2),
-            ];
-        });
-
-        // Kirim data ke view
-        return view('admin.dashboard', compact(
-            'memberCount',
-            'eventCount',
-            'registeredMembersCount',
-            'completedEventsCount',
-            'eventsPerMonth',
-            'events',
-            'kategoris',
-            'nextMonths',
-            'eventsWithMembers',
-            'eventsWithInterestPercentage'
-        ));
+        // Jumlah member bulan mendatang
+        $nextMembers[$monthLabel] = $events->filter(function ($event) use ($nextMonth) {
+            return Carbon::parse($event->date)->isSameMonth($nextMonth);
+        })->flatMap(function ($event) {
+            return $event->members;
+        })->count();
     }
+
+    // Data untuk jumlah member terdaftar per event
+    $eventsWithMembers = $events->map(function ($event) {
+        return [
+            'event_name' => $event->name,
+            'member_count' => $event->members->count(),
+            'total_capacity' => $event->capacity,
+        ];
+    });
+
+    // Menghitung persentase peminat per event
+    $eventsWithInterestPercentage = $eventsWithMembers->map(function ($event) {
+        $percentage = ($event['member_count'] / max($event['total_capacity'], 1)) * 100;
+        return [
+            'event_name' => $event['event_name'],
+            'interest_percentage' => round($percentage, 2),
+        ];
+    });
+
+    // Kirim data ke view
+    return view('admin.dashboard', compact(
+        'memberCount',
+        'eventCount',
+        'registeredMembersCount',
+        'completedEventsCount',
+        'eventsPerMonth',
+        'membersPerMonth', // Kirim data members per bulan
+        'events',
+        'kategoris',
+        'nextMonths',
+        'nextMembers', // Kirim data jumlah member bulan mendatang
+        'eventsWithMembers',
+        'eventsWithInterestPercentage'
+    ));
+}
+
 }
