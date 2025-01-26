@@ -212,11 +212,15 @@
                                     <!-- Menambahkan margin bawah untuk jarak antar item -->
                                     <div class="col-md-2 d-flex flex-column align-items-center">
                                         <!-- Menampilkan waktu mulai (start_date) -->
-                                        <time
-                                            class="mb-2">{{ \Carbon\Carbon::parse($event->start_date)->format('d-M-Y h:i A') }}</time>
+                                        <time class="mb-2">
+                                            {{ \Carbon\Carbon::parse($event->start_date)->setTimezone('Asia/Jakarta')->format('d-M-Y h:i A') }}
+                                        </time>
                                         <!-- Menampilkan waktu selesai (end_date) -->
-                                        <time>{{ \Carbon\Carbon::parse($event->end_date)->format('d-M-Y h:i A') }}</time>
+                                        <time>
+                                            {{ \Carbon\Carbon::parse($event->end_date)->setTimezone('Asia/Jakarta')->format('d-M-Y h:i A') }}
+                                        </time>
                                     </div>
+
                                     <div class="col-md-10">
                                         <div class="d-flex align-items-start">
                                             <!-- Gambar di kiri -->
