@@ -89,7 +89,7 @@
                     ...@json(array_keys($nextMonths->toArray())) // Bulan selanjutnya
                 ], // Gabungkan bulan yang ada dengan bulan selanjutnya
                 datasets: [{
-                        label: 'Events per Month',
+                        label: 'Events per bulan',
                         data: [
                             ...@json($eventsPerMonth->values()), // Data event bulan ini
                             ...@json($nextMonths->values()) // Data event bulan selanjutnya
@@ -102,7 +102,7 @@
                         pointRadius: 5
                     },
                     {
-                        label: 'Registered Members per Month', // Label untuk dataset members
+                        label: 'Registered Members per bulan', // Label untuk dataset members
                         data: [
                             ...@json($membersPerMonth->values()), // Data jumlah member yang terdaftar bulan ini
                             ...@json($nextMembers->values()) // Data jumlah member yang terdaftar bulan depan
@@ -208,7 +208,7 @@ var combinedChart = new Chart(membersCtx, {
                 }
             },
             {
-                label: 'Interest Percentage per Event',
+                label: 'presentase peminat per Event',
                 data: @json($eventsWithInterestPercentage->pluck('interest_percentage')->toArray()).map(function(val) {
                     return val / 10; // Mengubah nilai ke persen (misalnya 600 menjadi 60)
                 }), // Data persentase untuk event

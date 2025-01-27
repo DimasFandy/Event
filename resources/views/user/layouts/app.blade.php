@@ -13,7 +13,9 @@
     <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap CSS File -->
@@ -45,9 +47,9 @@
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#speakers">Events</a></li>
-                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="{{ route('home') }}#about">About</a></li>
+                    <li><a href="{{ route('home') }}#speakers">Events</a></li>
+                    <li><a href="{{ route('home') }}#schedule">Schedule</a></li>
 
                     @guest('member')
                         <li><a href="{{ route('user.auth.login_user') }}">Login</a></li>
@@ -55,13 +57,14 @@
                     @else
                         <!-- Jika user login -->
                         <li class="dropdown">
-                            <a href="#" class="d-flex align-items-center justify-content-between" id="userMenu" data-toggle="dropdown" aria-expanded="false">
+                            <a href="#" class="d-flex align-items-center justify-content-between" id="userMenu"
+                                data-toggle="dropdown" aria-expanded="false">
                                 <!-- Tampilkan Nama -->
                                 <span class="me-2">{{ Auth::guard('member')->user()->name }}</span>
                                 <!-- Tampilkan Foto Profil -->
-                               <!-- Tampilkan Foto Profil -->
-                               <img src="{{ asset('storage/' . (Auth::guard('member')->user()->photo ?? 'user.jpg')) }}"
-                               alt="User Photo" class="rounded-circle user-photo">
+                                <!-- Tampilkan Foto Profil -->
+                                <img src="{{ asset('storage/' . (Auth::guard('member')->user()->photo ?? 'user.jpg')) }}"
+                                    alt="User Photo" class="rounded-circle user-photo">
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="userMenu">
                                 <li>

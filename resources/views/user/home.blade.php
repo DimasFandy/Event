@@ -52,7 +52,9 @@
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="#intro">Home</a></li>
-                    <li><a href="#about">Events</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#speakers">Events</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
 
                     <!-- Tampilkan opsi berdasarkan status login -->
                     @auth('member')

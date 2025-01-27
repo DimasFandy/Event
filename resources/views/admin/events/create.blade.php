@@ -5,6 +5,23 @@
 <!-- Tambahkan CSS Select2 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
+<!-- Show success or error notifications -->
+@if(session('success'))
+    <script>
+        $(document).ready(function() {
+            $('#successModal').modal('show');
+        });
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        $(document).ready(function() {
+            $('#errorModal').modal('show');
+        });
+    </script>
+@endif
+
 <h1 class="mb-4 text-primary" style="font-family: 'Roboto', sans-serif; font-weight: 700; color: #004085; text-align: center; margin-bottom: 20px;">
     Tambah Event
 </h1>
@@ -60,17 +77,59 @@
     </button>
 </form>
 
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Event Added Successfully</h5>
+            </div>
+            <div class="modal-body">
+                Event berhasil ditambahkan. <b>klik dimana saja untuk menutup. Terima Kasih</b>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ route('events.index') }}" class="btn btn-primary">Go to Event List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+            </div>
+            <div class="modal-body">
+                Terjadi kesalahan saat menambahkan event. <b>klik dimana saja untuk menutup. Terima Kasih</b>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ route('events.index') }}" class="btn btn-danger">Go to Event List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Tambahkan JS Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
         // Inisialisasi Select2 pada elemen dengan class select2
         $('.select2').select2({
             placeholder: "Pilih Kategori",
             allowClear: true
+        });
+
+        // Close modal when clicking anywhere in the modal body
+        $('#successModal, #errorModal').on('click', function (e) {
+            if ($(e.target).is('.modal-body')) {
+                $(this).modal('hide');
+            }
         });
     });
 </script>

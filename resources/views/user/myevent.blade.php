@@ -1,9 +1,9 @@
 @extends('user.layouts.app')
 
 @section('content')
-
+<link rel="stylesheet" href="{{ asset('css/myevent.css') }}">
 <div class="container mt-4">
-    <h1 class="mb-4">Event yang Diikuti</h1>
+    <h1>Event yang Diikuti</h1>
 
     @if($events->isEmpty())
         <div class="alert alert-info">
@@ -22,16 +22,39 @@
 
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <span><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($event->start_date)->format('d M Y') }} - {{ \Carbon\Carbon::parse($event->end_date)->format('d M Y') }}</span>
+                                <span>
+                                    <strong>Tanggal:</strong>
+                                    {{ \Carbon\Carbon::parse($event->start_date)->format('d M Y') }} -
+                                    {{ \Carbon\Carbon::parse($event->end_date)->format('d M Y') }}
+                                </span>
                                 @php
-                                    $status = \Carbon\Carbon::now()->between($event->start_date, $event->end_date) ? 'active' : 'inactive';
+                                    // Pastikan start_date dan end_date diparsing sebagai objek Carbon
+                                    $startDate = \Carbon\Carbon::parse($event->start_date);
+                                    $endDate = \Carbon\Carbon::parse($event->end_date);
+                                    $now = \Carbon\Carbon::now();
+
+                                    // Tentukan status berdasarkan tanggal sekarang
+                                    if ($now->between($startDate, $endDate)) {
+                                        $status = 'active';
+                                        $label = 'Sedang Berlangsung';
+                                        $badgeClass = 'bg-success';
+                                    } elseif ($now->lt($startDate)) {
+                                        $status = 'upcoming';
+                                        $label = 'Akan Datang';
+                                        $badgeClass = 'bg-info';
+                                    } else {
+                                        $status = 'inactive';
+                                        $label = 'Selesai';
+                                        $badgeClass = 'bg-secondary';
+                                    }
                                 @endphp
-                                <span class="badge {{ $status == 'active' ? 'bg-success' : 'bg-secondary' }}">
-                                    {{ $status == 'active' ? 'Sedang Berlangsung' : 'Selesai' }}
+                                <span class="badge {{ $badgeClass }}">
+                                    {{ $label }}
                                 </span>
                             </div>
                             <p><strong>Deskripsi:</strong> {{ \Illuminate\Support\Str::limit($event->description, 100) }}</p>
                         </div>
+
 
                         <div class="card-footer text-center">
                             <a href="{{ route('user.events_details', $event->id) }}" class="btn btn-sm btn-info">Detail Event</a>

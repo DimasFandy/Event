@@ -6,6 +6,20 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/events.css') }}">
 
+    <!-- Show success or error notifications -->
+    @if (session('success'))
+        <script>
+            $(document).ready(function() {
+                $('#successModal').modal('show');
+            });
+        </script>
+    @elseif(session('error'))
+        <script>
+            $(document).ready(function() {
+                $('#errorModal').modal('show');
+            });
+        </script>
+    @endif
 
     <h1 class="mb-4 text-primary">Daftar Event</h1>
 
@@ -140,6 +154,41 @@
                     style="font-family: 'Poppins', sans-serif;">{{ $page }}</a>
             @endforeach
             <a href="{{ $events->nextPageUrl() }}" class="page-link" style="font-family: 'Poppins', sans-serif;">Next</a>
+        </div>
+    </div>
+
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Password Updated Successfully</h5>
+                </div>
+                <div class="modal-body">
+                    Event berhasil di buat. <b>klik dimana saja untuk menutup. Terima Kasih</b>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ route('events.index') }}" class="btn btn-primary">kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                </div>
+                <div class="modal-body">
+                    Terjadi kesalahan. <b>klik dimana saja untuk menutup. Terima Kasih</b>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ route('events.index') }}" class="btn btn-danger">kembali</a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

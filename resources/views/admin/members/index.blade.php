@@ -22,12 +22,12 @@
             <table id="members-table" class="table table-striped table-bordered shadow-sm">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="text-center" style="background-color: #6c757d; color: white;">No</th>
-                        <th class="text-center" style="background-color: #007bff; color: white;">Name</th>
-                        <th class="text-center" style="background-color: #28a745; color: white;">Email</th>
-                        <th class="text-center" style="background-color: #ffc107; color: black;">Phone</th>
-                        <th class="text-center" style="background-color: #17a2b8; color: white;">Photo</th> <!-- Kolom Foto -->
-                        <th class="text-center" style="background-color: #dc3545; color: white;">Actions</th>
+                        <th class="text-center" style="background-color: #353535; color: white;">No</th>
+                        <th class="text-center" style="background-color: #353535; color: white;">Name</th>
+                        <th class="text-center" style="background-color: #353535; color: white;">Email</th>
+                        <th class="text-center" style="background-color: #353535; color: white;">Phone</th>
+                        <th class="text-center" style="background-color: #353535; color: white;">Photo</th> 
+                        <th class="text-center" style="background-color: #353535; color: white;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>

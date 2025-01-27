@@ -53,11 +53,12 @@
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="index.html#about">About</a></li>
-                    <li><a href="index.html#schedule">Schedule</a></li>
-                    <li><a href="index.html#supporters">supporters</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="{{ route('home') }}#about">About</a></li>
+                    <li><a href="{{ route('home') }}#schedule">Schedule</a></li>
+                    <li><a href="{{ route('home') }}#supporters">Supporters</a></li>
+                    <li><a href="{{ route('home') }}#contact">Contact</a></li>
                     <!-- Tampilkan opsi berdasarkan status login -->
+                    
                     @auth('member')
                         <!-- Jika user login -->
                         <li class="dropdown">

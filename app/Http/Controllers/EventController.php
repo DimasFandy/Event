@@ -113,7 +113,7 @@ class EventController extends Controller
         // Relasi kategori
         $event->kategori()->sync($request->kategori_id);
 
-        return redirect()->route('events.index')->with('success', 'Event berhasil ditambahkan.');
+        return redirect()->route('events.create')->with('success', 'Event berhasil ditambahkan.');
     }
 
 
@@ -177,7 +177,7 @@ class EventController extends Controller
         // Sinkronisasi kategori
         $event->kategori()->sync($request->kategori_id);
 
-        return redirect()->route('events.index')->with('success', 'Event berhasil diperbarui.');
+        return redirect()->route('events.edit', ['event' => $event->id])->with('success', 'Event berhasil diperbarui.');
     }
 
 
