@@ -13,10 +13,9 @@ class HomeController extends Controller
     public function home()
     {
 
-        // Ambil data event untuk ditampilkan
-        $events = Event::all();
+        // Ambil data event yang statusnya aktif
+        $events = Event::where('status', 'active')->get();
 
         return view('user.home', compact('events'));
     }
-    
 }
