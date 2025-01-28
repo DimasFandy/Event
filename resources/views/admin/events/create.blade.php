@@ -76,41 +76,6 @@
         Simpan
     </button>
 </form>
-
-<!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">Event Added Successfully</h5>
-            </div>
-            <div class="modal-body">
-                Event berhasil ditambahkan. <b>klik dimana saja untuk menutup. Terima Kasih</b>
-            </div>
-            <div class="modal-footer">
-                <a href="{{ route('events.index') }}" class="btn btn-primary">Go to Event List</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Error Modal -->
-<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="errorModalLabel">Error</h5>
-            </div>
-            <div class="modal-body">
-                Terjadi kesalahan saat menambahkan event. <b>klik dimana saja untuk menutup. Terima Kasih</b>
-            </div>
-            <div class="modal-footer">
-                <a href="{{ route('events.index') }}" class="btn btn-danger">Go to Event List</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -123,13 +88,6 @@
         $('.select2').select2({
             placeholder: "Pilih Kategori",
             allowClear: true
-        });
-
-        // Close modal when clicking anywhere in the modal body
-        $('#successModal, #errorModal').on('click', function (e) {
-            if ($(e.target).is('.modal-body')) {
-                $(this).modal('hide');
-            }
         });
     });
 </script>

@@ -147,17 +147,34 @@
         </div>
     </div>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Display success alert when 'success' session variable is set
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'Oke'
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'Coba Lagi'
+            });
+        @endif
+    </script>
+
 @endsection
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Display success or error notification as pop-ups
-        @if (session('success'))
-            alert('Success: {{ session('success') }}');
-        @elseif (session('error'))
-            alert('Error: {{ session('error') }}');
-        @endif
-
         const deleteModal = document.getElementById('deleteModal');
         deleteModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;

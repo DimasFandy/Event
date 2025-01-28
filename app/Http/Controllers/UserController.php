@@ -8,17 +8,13 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-        public function __construct()
+    public function __construct()
     {
         // examples:
-        $this->middleware(['permission:create_user'])->only(['create','store']);
-        $this->middleware(['permission:edit_user'])->only(['edit','update']);
-        $this->middleware(['permission:read_user'])->only(['read','show']);
-        $this->middleware(['permission:delete_user'])->only(['destroy','delete']);
-
+        $this->middleware(['permission:create_user'])->only(['create', 'store']);
+        $this->middleware(['permission:edit_user'])->only(['edit', 'update']);
+        $this->middleware(['permission:read_user'])->only(['read', 'show']);
+        $this->middleware(['permission:delete_user'])->only(['destroy', 'delete']);
     }
     public function index(Request $request)
     {
@@ -64,14 +60,16 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed', // Validasi password
             'role_id' => 'required|exists:roles,id', // Memastikan role_id ada di tabel roles
         ]);
 
-        // Membuat user baru
+        // Membuat user baru dengan password yang diinputkan oleh pengguna
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => bcrypt('password123'), // Set default password
+            'password' => bcrypt($validated['password']), // Hash password dari input
+            'role_id' => $validated['role_id'],
         ]);
 
         // Menambahkan role ke user yang baru dibuat
@@ -80,9 +78,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User created successfully!');
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
@@ -98,9 +94,7 @@ class UserController extends Controller
         // Kembalikan view untuk melihat detail user
         return view('admin.users.show', compact('user'));
     }
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         // Validasi input
@@ -108,6 +102,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'role_id' => 'required|exists:roles,id', // Memastikan role_id ada di tabel roles
+            'password' => 'nullable|string|min:8', // Validasi password
         ]);
 
         // Cari user berdasarkan ID
@@ -117,7 +112,8 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-
+            'role_id' => $request->role_id,
+            'password' => $request->password ? bcrypt($request->password) : $user->password,
         ]);
 
         // Sinkronkan role ke user yang terpilih
@@ -127,19 +123,10 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User updated successfully!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        try {
-            $user = User::findOrFail($id);
-            $user->delete();
+        $user->delete();
 
-            return redirect()->route('admin.users.index')->with('success', 'User successfully deleted!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong, please try again.');
-        }
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

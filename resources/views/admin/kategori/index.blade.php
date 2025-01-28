@@ -12,7 +12,7 @@
     @section('content')
         <div class="container">
             <h1 class="mb-4" style="font-family: 'Poppins', sans-serif; color: #007bff;">
-                 Daftar Kategori
+                Daftar Kategori
             </h1>
 
             @can('create_kategori')
@@ -103,10 +103,36 @@
                 <a href="{{ $kategoris->nextPageUrl() }}" class="page-link">Next</a>
             </div>
         </div>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Display success alert when 'success' session variable is set
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'Oke'
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'Coba Lagi'
+            });
+        @endif
+    </script>
     @endsection
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
     <script>
         $(document).ready(function() {
             // Inisialisasi Select2

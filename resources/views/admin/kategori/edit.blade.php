@@ -30,7 +30,30 @@
         </button>
     </form>
 </div>
+<!-- Alert Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script>
+    // Display success alert when 'success' session variable is set
+    @if (session('success'))
+        Swal.fire({
+            title: 'Sukses!',
+            text: "{{ session('success') }}",  // Gunakan tanda kutip ganda di sini
+            icon: 'success',
+            confirmButtonText: 'Oke'
+        });
+    @endif
+
+    // Display error alert when 'error' session variable is set
+    @if (session('error'))
+        Swal.fire({
+            title: 'Gagal!',
+            text: "{{ session('error') }}",  // Gunakan tanda kutip ganda di sini
+            icon: 'error',
+            confirmButtonText: 'Coba Lagi'
+        });
+    @endif
+</script>
 <!-- Inline Animation CSS -->
 <style>
 @keyframes fadeIn {

@@ -34,6 +34,7 @@ class KategoriController extends Controller
     // Menyimpan kategori baru
     public function store(Request $request)
     {
+        // Validate incoming request
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -41,10 +42,13 @@ class KategoriController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
+        // Create the category
         Kategori::create($request->all());
 
+        // Redirect with success message
         return redirect()->route('kategoris.index')->with('success', 'Kategori berhasil ditambahkan!');
     }
+
 
     // Menampilkan detail kategori
     public function show(Kategori $kategori)
@@ -146,7 +150,6 @@ class KategoriController extends Controller
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {
-            \Log::error('Error in getFilteredData: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

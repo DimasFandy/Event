@@ -26,7 +26,7 @@
                         <th class="text-center" style="background-color: #353535; color: white;">Name</th>
                         <th class="text-center" style="background-color: #353535; color: white;">Email</th>
                         <th class="text-center" style="background-color: #353535; color: white;">Phone</th>
-                        <th class="text-center" style="background-color: #353535; color: white;">Photo</th> 
+                        <th class="text-center" style="background-color: #353535; color: white;">Photo</th>
                         <th class="text-center" style="background-color: #353535; color: white;">Actions</th>
                     </tr>
                 </thead>
@@ -43,6 +43,30 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Display success alert when 'success' session variable is set
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'Oke'
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'Coba Lagi'
+            });
+        @endif
+    </script>
+    
     <script>
         var $j = jQuery.noConflict(); // Menghindari konflik
 
@@ -100,4 +124,5 @@
             });
         });
     </script>
+
 @endsection

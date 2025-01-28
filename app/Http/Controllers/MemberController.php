@@ -46,7 +46,12 @@ class MemberController extends Controller
                         }
 
                         if (auth()->user()->can('delete_member')) {
-                            $buttons .= '<button onclick="confirmDelete(' . $row->id . ')" class="btn btn-danger btn-sm mx-1">Delete</button>';
+                            $buttons .= '
+                            <form action="' . route('members.destroy', $row->id) . '" method="POST" style="display:inline;">
+                                ' . csrf_field() . '
+                                ' . method_field('DELETE') . '
+                                <button type="submit" class="btn btn-danger btn-sm mx-1">Delete</button>
+                            </form>';
                         }
 
                         return $buttons;
@@ -101,7 +106,7 @@ class MemberController extends Controller
             'photo' => $photoPath, // Simpan path foto di database
         ]);
 
-        return redirect()->route('members.index')->with('success', 'Member added successfully');
+        return redirect()->route('members.index')->with('success', 'Member berhasil di tambahkan.');
     }
 
     public function edit(Member $member)
@@ -141,7 +146,7 @@ class MemberController extends Controller
             'photo' => $member->photo, // Simpan path foto jika ada perubahan
         ]);
 
-        return redirect()->route('members.index')->with('success', 'Member updated successfully.');
+        return redirect()->route('members.index')->with('success', 'Member berhasil di perbarui.');
     }
 
     public function show($id)
@@ -176,7 +181,7 @@ class MemberController extends Controller
         $member->save();
 
         // Kembali ke halaman edit password dengan pesan sukses
-        return redirect()->route('members.editPassword', $member->id)->with('success', 'Password berhasil diubah');
+        return redirect()->route('members.index')->with('success', 'Password berhasil diubah');
     }
 
     public function destroy(Request $request, Member $member)
@@ -197,6 +202,6 @@ class MemberController extends Controller
         // Hapus member dari database
         $member->delete();
 
-        return redirect()->route('admin.members.index')->with('success', 'Member deleted successfully.');
+        return redirect()->route('members.index')->with('success', 'Member berhasil di hapus.');
     }
 }

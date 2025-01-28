@@ -26,11 +26,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Redirect ke halaman dashboard setelah login berhasil
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')->with('success', 'Login berhasil! Selamat datang.');
         }
 
         // Jika login gagal
-        return back()->with('error', 'Invalid credentials');
+        return back()->with('error', 'Email atau password salah');
     }
     public function logout(Request $request)
     {
