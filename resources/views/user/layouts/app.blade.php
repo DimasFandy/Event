@@ -62,7 +62,6 @@
                                 <!-- Tampilkan Nama -->
                                 <span class="me-2">{{ Auth::guard('member')->user()->name }}</span>
                                 <!-- Tampilkan Foto Profil -->
-                                <!-- Tampilkan Foto Profil -->
                                 <img src="{{ asset('storage/' . (Auth::guard('member')->user()->photo ?? 'user.jpg')) }}"
                                     alt="User Photo" class="rounded-circle user-photo">
                             </a>
@@ -138,6 +137,30 @@
     <!-- JavaScript Libraries -->
     <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+      <!-- SweetAlert2 -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <script>
+          // Display success alert when 'success' session variable is set
+          @if (session('success'))
+              Swal.fire({
+                  title: 'Sukses!',
+                  text: "{{ session('success') }}",
+                  icon: 'success',
+                  confirmButtonText: 'Oke'
+              });
+          @endif
+
+          @if (session('error'))
+              Swal.fire({
+                  title: 'Gagal!',
+                  text: "{{ session('error') }}",
+                  icon: 'error',
+                  confirmButtonText: 'Coba Lagi'
+              });
+          @endif
+      </script>
 </body>
 
 </html>

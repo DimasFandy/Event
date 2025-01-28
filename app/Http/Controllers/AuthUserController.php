@@ -28,42 +28,34 @@ class AuthUserController extends Controller
     // Handle user login
     public function login(Request $request)
     {
-        // Validasi form login
         $request->validate([
             'phone' => 'required|digits_between:10,15',
             'password' => 'required|min:8',
         ]);
 
-        // Cek apakah user ada di database berdasarkan nomor HP
         $member = Member::where('phone', $request->phone)->first();
 
-        // Verifikasi jika user ada
         if ($member) {
-            // Cek apakah password sesuai
             if (Hash::check($request->password, $member->password)) {
-
                 // Generate dan simpan OTP di session
-                $otp = rand(100000, 999999); // Buat OTP acak 6 digit
+                $otp = rand(100000, 999999);
                 Session::put('otp', $otp);
                 Session::put('member_id', $member->id);
 
                 // Kirim OTP melalui WhatsApp
                 app(WhatsappController::class)->sendWhatsappMessage($member->phone, $member->name, $otp);
 
-                // Redirect ke halaman verifikasi OTP
-                return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id]);
+                return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id])
+                    ->with('success', 'OTP berhasil dikirim. Silakan cek WhatsApp Anda.');
             }
 
-            // Password salah
-            return back()->withErrors(['password' => 'Password salah'])->withInput();
+            return back()->withErrors(['password' => 'Password salah'])
+                ->with('error', 'Login gagal, password salah.');
         }
 
-        // Nomor HP tidak valid
-        return back()->withErrors(['phone' => 'Nomor HP tidak ditemukan'])->withInput();
+        return back()->withErrors(['phone' => 'Nomor HP tidak ditemukan'])
+            ->with('error', 'Login gagal, nomor HP tidak ditemukan.');
     }
-
-
-
 
     // Show the registration form for users
     public function showRegisterForm()
@@ -78,7 +70,6 @@ class AuthUserController extends Controller
 
     public function register(Request $request)
     {
-        // Validasi form registrasi
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:members,email',
@@ -90,11 +81,10 @@ class AuthUserController extends Controller
             ],
             'password' => 'required|confirmed|min:8',
         ], [
-            'phone.regex' => 'Nomor telepon tidak boleh berupa nomor tidak valid seperti 123456789 atau angka berulang.'
+            'phone.regex' => 'Nomor telepon tidak valid.',
         ]);
 
         try {
-            // Membuat data pengguna baru di tabel member
             $member = Member::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -103,23 +93,23 @@ class AuthUserController extends Controller
             ]);
 
             // Generate dan simpan OTP di session
-            $otp = rand(100000, 999999); // Buat OTP acak 6 digit
+            $otp = rand(100000, 999999);
             Session::put('otp', $otp);
             Session::put('member_id', $member->id);
 
             // Kirim OTP melalui WhatsApp
             app(WhatsappController::class)->sendWhatsappMessage($member->phone, $member->name, $otp);
 
-            // Redirect ke halaman verifikasi OTP
-            return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id]);
+            return redirect()->route('user.auth.verify_otp', ['member_id' => $member->id])
+                ->with('success', 'Registrasi berhasil! OTP telah dikirim melalui WhatsApp.');
         } catch (QueryException $e) {
-            // Tangkap error duplicate entry
-            if ($e->errorInfo[1] == 1062) { // Kode error MySQL untuk duplicate entry
-                return back()->withErrors(['duplicate' => 'Email atau nomor telepon sudah terdaftar.'])->withInput();
+            if ($e->errorInfo[1] == 1062) {
+                return back()->withErrors(['duplicate' => 'Email atau nomor telepon sudah terdaftar.'])
+                    ->with('error', 'Registrasi gagal, email atau nomor telepon sudah terdaftar.');
             }
 
-            // Tangkap error lain
-            return back()->withErrors(['error' => 'Terjadi kesalahan saat registrasi. Silakan coba lagi.'])->withInput();
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat registrasi.'])
+                ->with('error', 'Registrasi gagal, silakan coba lagi.');
         }
     }
 
@@ -237,11 +227,12 @@ class AuthUserController extends Controller
             $member = Member::find($member_id);
             Auth::guard('member')->login($member);
 
-            // Redirect ke halaman home setelah berhasil login
-            return redirect()->route('user.home');
+            // Redirect ke halaman home dengan pesan sukses
+            return redirect()->route('user.home')->with('success', 'Login berhasil! Selamat datang, ' . $member->name);
         }
 
         // OTP salah
         return back()->withErrors(['otp' => 'Kode OTP salah']);
     }
+
 }

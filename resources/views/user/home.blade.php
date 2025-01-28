@@ -668,14 +668,34 @@
     <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
 
-
-
-
     <!-- Contact Form JavaScript File -->
     <script src="contactform/contactform.js"></script>
 
     <!-- Template Main Javascript File -->
     <script src="{{ asset('js/main.js') }}"></script>
+      <!-- SweetAlert2 -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <script>
+          // Display success alert when 'success' session variable is set
+          @if (session('success'))
+              Swal.fire({
+                  title: 'Sukses!',
+                  text: "{{ session('success') }}",
+                  icon: 'success',
+                  confirmButtonText: 'Oke'
+              });
+          @endif
+
+          @if (session('error'))
+              Swal.fire({
+                  title: 'Gagal!',
+                  text: "{{ session('error') }}",
+                  icon: 'error',
+                  confirmButtonText: 'Coba Lagi'
+              });
+          @endif
+      </script>
 </body>
 
 </html>

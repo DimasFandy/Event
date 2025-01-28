@@ -67,7 +67,7 @@
                                 <span class="me-2">{{ Auth::guard('member')->user()->name }}</span>
                                 <!-- Tampilkan Foto Profil -->
                                 <img src="{{ asset('storage/' . (Auth::guard('member')->user()->photo ?? 'user.jpg')) }}"
-                                    alt="User Photo" class="rounded-circle user-photo">
+                                    alt="User Photo" class="rounded-circle user-photo mx-2">
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="userMenu">
                                 <li>
@@ -154,6 +154,7 @@
                 </div>
             @endif
 
+            <a href="{{ route('home') }}" class="btn btn-primary mb-2"><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/FFFFFF/long-arrow-left.png" alt="long-arrow-left"/> back to home</a>
             <div class="row mb-5">
                 <div class="col-md-6">
                     <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->name }}"
@@ -175,7 +176,7 @@
                         <p><strong>Jumlah Peserta Terdaftar:</strong> {{ $participantCount }} peserta</p>
 
                         <div class="d-flex">
-                            <a href="{{ route('home') }}" class="btn btn-primary mr-2">Kembali</a>
+                            <a href="#" class="btn btn-primary mr-2" onclick="window.history.back(); return false;">Kembali</a>
 
                             <!-- Cek apakah member sudah mendaftar -->
                             @php
