@@ -50,7 +50,7 @@ Route::resource('users', UserController::class);
 
 // CRUD Kategori
 Route::resource('kategoris', KategoriController::class);
-Route::post('kategoris/{kategori}/reactivate', [KategoriController::class, 'reactivate'])->name('kategoris.reactivate');
+// Route::post('kategoris/{kategori}/reactivate', [KategoriController::class, 'reactivate'])->name('kategoris.reactivate');
 
 Route::get('events/export', function () {
     return Excel::download(new EventsExport, 'events.xlsx');
@@ -60,7 +60,7 @@ Route::get('events/export', function () {
 Route::resource('events', EventController::class);
 
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
-Route::post('events/{event}/reactivate', [EventController::class, 'reactivate'])->name('events.reactivate');
+// Route::post('events/{event}/reactivate', [EventController::class, 'reactivate'])->name('events.reactivate');
 
 // API untuk mendapatkan data dropdown dan data terfilter
 Route::post('/getDropdownData', [KategoriController::class, 'getDropdownData'])->name('getDropdownData');
@@ -114,5 +114,6 @@ Route::get('verify-otp/{member_id}', [AuthUserController::class, 'showVerifyOtpF
 // Route untuk menangani verifikasi OTP
 Route::post('verify-otp/{member_id}', [AuthUserController::class, 'verifyOtp'])->name('user.auth.verify_otp');
 
-
+//rpute untuk menampilkan schedule di halaman user 
 Route::get('/schedule', [HomeController::class, 'showSchedule']);
+

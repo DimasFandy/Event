@@ -10,6 +10,6 @@
         <p style="font-size: 1rem; color: #4b5563;"><strong>Bobot:</strong> {{ $kategori->weight }}</p>
         <p style="font-size: 1rem; color: #4b5563;"><strong>Status:</strong> <span style="color: {{ $kategori->status == 'active' ? '#10b981' : '#ef4444' }}; font-weight: bold;">{{ $kategori->status == 'active' ? 'Aktif' : 'Tidak Aktif' }}</span></p>
     </div>
-    <button onclick="window.history.back()" style="margin-top: 20px; padding: 10px 20px; background: linear-gradient(to right, #2563eb, #1d4ed8); color: #ffffff; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s ease;">Kembali</button>
+    <a href="{{ route('kategoris.index') }}" class="btn btn-primary mr-2">Kembali</a>
 </div>
 @endsection

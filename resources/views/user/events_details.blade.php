@@ -58,7 +58,7 @@
                     <li><a href="{{ route('home') }}#supporters">Supporters</a></li>
                     <li><a href="{{ route('home') }}#contact">Contact</a></li>
                     <!-- Tampilkan opsi berdasarkan status login -->
-                    
+
                     @auth('member')
                         <!-- Jika user login -->
                         <li class="dropdown">

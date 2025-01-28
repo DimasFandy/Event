@@ -78,7 +78,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <script>
         // Menampilkan alert sukses jika session 'success' ada
         @if (session('success'))
@@ -192,117 +192,115 @@
         });
 
         var membersCtx = document.getElementById('membersChart').getContext('2d');
-
-        // Mengambil event names dan menggantinya dengan indeks
-        var eventIndexes = @json($eventsWithMembers->pluck('event_name')->toArray()).map((_, index) => index + 1); // Menggunakan angka sebagai label
-
-        var combinedChart = new Chart(membersCtx, {
-            type: 'bar', // Tipe chart bar untuk dataset Interest Percentage
-            data: {
-                labels: eventIndexes, // Ganti label menjadi angka (indeks)
-                datasets: [{
-                        label: 'Members Registered per Event',
-                        data: @json($eventsWithMembers->pluck('member_count')->toArray()), // Jumlah member terdaftar per event
-                        type: 'line', // Ganti tipe chart menjadi line untuk dataset ini
-                        borderColor: 'rgba(54, 162, 235, 1)', // Warna garis untuk chart line
-                        backgroundColor: 'rgba(54, 162, 235, 0)', // Menghapus warna background untuk chart line
-                        borderWidth: 2, // Ketebalan garis chart line
-                        tension: 0.4, // Membuat garis sedikit melengkung (smooth)
-                        fill: false, // Tidak mengisi area bawah garis
-                        animation: {
-                            tension: {
-                                duration: 1000, // Durasi animasi (1 detik)
-                                easing: 'linear', // Menggunakan efek linear
-                                from: 1, // Nilai awal tension
-                                to: 0, // Nilai akhir tension
-                                loop: true // Menambahkan looping pada animasi
-                            }
-                        }
-                    },
-                    {
-                        label: 'presentase peminat per Event',
-                        data: @json($eventsWithInterestPercentage->pluck('interest_percentage')->toArray()).map(function(val) {
-                            return val / 10; // Mengubah nilai ke persen (misalnya 600 menjadi 60)
-                        }), // Data persentase untuk event
-                        backgroundColor: 'rgba(255, 99, 132, 0.7)', // Warna latar belakang untuk dataset kedua
-                        borderWidth: 0 // Menghilangkan border untuk dataset kedua
+// Mengambil event names dan menggantinya dengan indeks
+var eventIndexes = @json($eventsWithMembers->pluck('event_name')->toArray()).map((_, index) => index + 1); // Menggunakan angka sebagai label
+var combinedChart = new Chart(membersCtx, {
+    type: 'bar', // Tipe chart bar untuk dataset Interest Percentage
+    data: {
+        labels: eventIndexes, // Ganti label menjadi angka (indeks)
+        datasets: [
+            {
+                label: 'Members Registered per Event',
+                data: @json($eventsWithMembers->pluck('member_count')->toArray()), // Jumlah member terdaftar per event
+                type: 'line', // Ganti tipe chart menjadi line untuk dataset ini
+                borderColor: 'rgba(54, 162, 235, 1)', // Warna garis untuk chart line
+                backgroundColor: 'rgba(54, 162, 235, 0)', // Menghapus warna background untuk chart line
+                borderWidth: 2, // Ketebalan garis chart line
+                tension: 0.4, // Membuat garis sedikit melengkung (smooth)
+                fill: false, // Tidak mengisi area bawah garis
+                animation: {
+                    tension: {
+                        duration: 1000, // Durasi animasi (1 detik)
+                        easing: 'linear', // Menggunakan efek linear
+                        from: 1, // Nilai awal tension
+                        to: 0, // Nilai akhir tension
+                        loop: true // Menambahkan looping pada animasi
                     }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true, // Menampilkan judul
-                        text: 'Member Registered and Interest Percentage per Event', // Judul chart gabungan
-                        font: {
-                            size: 16, // Ukuran font
-                            weight: 'bold' // Berat font
-                        },
-                        padding: {
-                            top: 20, // Padding atas untuk memberi jarak antara judul dan chart
-                            bottom: 50 // Padding bawah untuk memberi jarak antara judul dan chart
-                        }
-                    },
-                    legend: {
-                        display: true, // Menampilkan legend
-                        position: 'bottom', // Menempatkan legend di bawah chart
-                        labels: {
-                            font: {
-                                size: 14, // Ukuran font
-                                weight: 'bold' // Berat font
-                            }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                var eventName = @json($eventsWithMembers->pluck('event_name')->toArray());
-                                var datasetLabel = tooltipItem.dataset.label; // Mendapatkan label dataset
-                                var value = tooltipItem.raw; // Nilai yang ditampilkan pada tooltip
-                                var eventIndex = tooltipItem.dataIndex; // Mengambil indeks data yang dipilih
-                                if (datasetLabel === 'Members Registered per Event') {
-                                    return eventName[eventIndex] + ': ' + value +
-                                        ' Members'; // Menampilkan nama event dan jumlah member
-                                } else if (datasetLabel === 'Interest Percentage per Event') {
-                                    return eventName[eventIndex] + ': ' + value +
-                                        '%'; // Menampilkan nama event dan persentase
-                                }
-                            }
-                        }
-                    },
-                    datalabels: {
-                        anchor: 'end', // Menempatkan label di ujung batang
-                        align: 'end', // Menyesuaikan label sejajar dengan ujung batang
-                        color: '#000', // Warna teks
-                        font: {
-                            size: 12, // Ukuran font
-                            weight: 'bold' // Berat font
-                        },
-                        formatter: function(value, context) {
-                            // Memformat data untuk tampil sebagai persentase
-                            if (context.dataset.label === 'Interest Percentage per Event') {
-                                return value + '%'; // Tambahkan simbol % untuk persentase
-                            }
-                            return value; // Menampilkan nilai data langsung
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Jumlah / Persentase', // Label untuk sumbu y
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            }
-                        }
-                    },
                 }
             },
-            plugins: [ChartDataLabels] // Menambahkan plugin dataLabels
-        });
+            {
+                label: 'Presentase Peminat per Event',
+                data: @json($eventsWithInterestPercentage->pluck('interest_percentage')->toArray()).map(function(val) {
+                    return val / 10; // Mengubah nilai ke persen (misalnya 600 menjadi 60)
+                }), // Data persentase untuk event
+                backgroundColor: 'rgba(255, 99, 132, 0.7)', // Warna latar belakang untuk dataset kedua
+                borderWidth: 0 // Menghilangkan border untuk dataset kedua
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true, // Menampilkan judul
+                text: 'Member Registered and Interest Percentage per Event', // Judul chart gabungan
+                font: {
+                    size: 16, // Ukuran font
+                    weight: 'bold' // Berat font
+                },
+                padding: {
+                    top: 20, // Padding atas untuk memberi jarak antara judul dan chart
+                    bottom: 50 // Padding bawah untuk memberi jarak antara judul dan chart
+                }
+            },
+            legend: {
+                display: true, // Menampilkan legend
+                position: 'bottom', // Menempatkan legend di bawah chart
+                labels: {
+                    font: {
+                        size: 14, // Ukuran font
+                        weight: 'bold' // Berat font
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        var eventName = @json($eventsWithMembers->pluck('event_name')->toArray());
+                        var datasetLabel = tooltipItem.dataset.label; // Mendapatkan label dataset
+                        var value = tooltipItem.raw; // Nilai yang ditampilkan pada tooltip
+                        var eventIndex = tooltipItem.dataIndex; // Mengambil indeks data yang dipilih
+                        if (datasetLabel === 'Members Registered per Event') {
+                            return eventName[eventIndex] + ': ' + value + ' Members'; // Menampilkan nama event dan jumlah member
+                        } else if (datasetLabel === 'Presentase Peminat per Event') {
+                            return eventName[eventIndex] + ': ' + value + '%'; // Menampilkan nama event dan persentase
+                        }
+                    }
+                }
+            },
+            datalabels: {
+                anchor: 'end', // Menempatkan label di ujung batang
+                align: 'end', // Menyesuaikan label sejajar dengan ujung batang
+                color: '#000', // Warna teks
+                font: {
+                    size: 12, // Ukuran font
+                    weight: 'bold' // Berat font
+                },
+                formatter: function(value, context) {
+                    // Memformat data untuk tampil sebagai persentase
+                    if (context.dataset.label === 'Presentase Peminat per Event') {
+                        return value + '%'; // Tambahkan simbol % untuk persentase
+                    }
+                    return value; // Menampilkan nilai data langsung
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Jumlah / Persentase', // Label untuk sumbu y
+                    font: {
+                        size: 14,
+                        weight: 'bold'
+                    }
+                }
+            },
+        }
+    },
+    plugins: [ChartDataLabels] // Menambahkan plugin dataLabels
+});
+
     </script>
 @endsection

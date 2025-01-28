@@ -24,7 +24,6 @@
 
             <!-- Filter Section -->
             <div class="filter-section p-4 bg-light rounded shadow-sm">
-                <h6 class="text-primary fw-bold mb-3">Filter Kategori</h6>
                 <form id="filterForm" class="mb-4">
                     <label for="filterSelect" class="form-label text-secondary">Pilih Kategori</label>
                     <select id="filterSelect" class="form-select border-primary shadow-sm" multiple="multiple"
@@ -47,7 +46,7 @@
                         <th>Deskripsi</th>
                         <th>Bobot</th>
                         <th>Status</th>
-                        <th style="width: 10%;">Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="kategoriTableBody">
@@ -58,36 +57,78 @@
                             <td>{{ $kategori->description }}</td>
                             <td>{{ $kategori->weight }}</td>
                             <td>{{ $kategori->status }}</td>
-                            <td class="d-flex gap-2 justify-content-center">
-                                @can('read_kategori')
-                                    <a href="{{ route('kategoris.show', $kategori) }}" class="btn btn-primary btn-sm">
-                                        <i class="bi bi-eye"></i>Lihat
-                                    </a>
-                                @endcan
-                                @can('edit_kategori')
-                                    <a href="{{ route('kategoris.edit', $kategori) }}" class="btn btn-warning btn-sm">
-                                        <i class="bi bi-pencil-square"></i>Edit
-                                    </a>
-                                @endcan
-                                @can('delete_kategori')
-                                    @if ($kategori->status == 'inactive')
-                                        <form action="{{ route('kategoris.reactivate', $kategori->id) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-success btn-sm">
-                                                <i class="bi bi-arrow-counterclockwise"></i>Re-Activate
-                                            </button>
-                                        </form>
-                                    @else
-                                        <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
+                            <td>
+                                <div class="d-flex gap-2"> <!-- Menambahkan Flexbox dan jarak antar tombol -->
+                                    @can('read_kategori')
+                                        <a href="{{ route('kategoris.show', $kategori) }}" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-eye"></i>Lihat
+                                        </a>
+                                    @endcan
+                                    @can('edit_kategori')
+                                        <a href="{{ route('kategoris.edit', $kategori) }}" class="btn btn-warning btn-sm">
+                                            <i class="bi bi-pencil-square"></i>Edit
+                                        </a>
+                                    @endcan
+                                    @can('delete_kategori')
+                                        @if ($kategori->status == 'inactive')
+                                            <!-- Tombol untuk reaktifasi -->
+                                            <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST"  style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="delete_type" value="reactivate">
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    <i class="bi bi-arrow-counterclockwise"></i> Re-Activate
+                                                </button>
+                                            </form>
+                                        @else
+                                            <!-- Tombol untuk membuka modal -->
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal-{{ $kategori->id }}">
                                                 <i class="bi bi-trash-fill"></i> Hapus
                                             </button>
-                                        </form>
-                                    @endif
-                                @endcan
+
+                                            <!-- Modal Konfirmasi -->
+                                            <div class="modal fade" id="deleteModal-{{ $kategori->id }}" tabindex="-1"
+                                                aria-labelledby="deleteModalLabel-{{ $kategori->id }}" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel-{{ $kategori->id }}">
+                                                                Konfirmasi Hapus</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Apa yang ingin Anda lakukan terhadap kategori ini?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <!-- Tombol untuk menonaktifkan -->
+                                                            <form action="{{ route('kategoris.destroy', $kategori->id) }}"
+                                                                method="POST" style="display: inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="delete_type" value="deactivate">
+                                                                <button type="submit" class="btn btn-warning">Nonaktifkan</button>
+                                                            </form>
+
+                                                            <!-- Tombol untuk menghapus permanen -->
+                                                            <form action="{{ route('kategoris.destroy', $kategori->id) }}"
+                                                                method="POST" style="display: inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="delete_type" value="permanent">
+                                                                <button type="submit" class="btn btn-danger">Hapus
+                                                                    Permanen</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endcan
+                                </div>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -104,29 +145,29 @@
             </div>
         </div>
 
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        // Display success alert when 'success' session variable is set
-        @if (session('success'))
-            Swal.fire({
-                title: 'Sukses!',
-                text: "{{ session('success') }}",
-                icon: 'success',
-                confirmButtonText: 'Oke'
-            });
-        @endif
+        <script>
+            // Display success alert when 'success' session variable is set
+            @if (session('success'))
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'Oke'
+                });
+            @endif
 
-        @if (session('error'))
-            Swal.fire({
-                title: 'Gagal!',
-                text: "{{ session('error') }}",
-                icon: 'error',
-                confirmButtonText: 'Coba Lagi'
-            });
-        @endif
-    </script>
+            @if (session('error'))
+                Swal.fire({
+                    title: 'Gagal!',
+                    text: "{{ session('error') }}",
+                    icon: 'error',
+                    confirmButtonText: 'Coba Lagi'
+                });
+            @endif
+        </script>
     @endsection
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

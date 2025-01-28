@@ -10,8 +10,6 @@ body {
 /* Container */
 .container {
     max-width: 1200px;
-    margin: 5px auto;
-    padding: 20px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -23,12 +21,11 @@ h1 {
     color: #007bff;
 }
 
-/* Button Styles */
-.btn {
-    font-size: 14px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: all 0.3s ease-in-out;
+/* Kontainer Tombol */
+.d-flex {
+    display: flex;
+    gap: 2px;  /* Menambahkan jarak antar tombol */
+    align-items: center;  /* Menjaga tombol tetap sejajar secara vertikal */
 }
 
 .btn-primary {
@@ -45,7 +42,7 @@ h1 {
 .btn-warning {
     background-color: #ffc107;
     border: none;
-    color: #212529;
+    color: #ffffff;
 }
 
 .btn-warning:hover {
@@ -67,7 +64,7 @@ h1 {
     background-color: #dc3545;
     border: none;
     color: #ffffff;
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 
 .btn-danger:hover {
@@ -120,19 +117,6 @@ h1 {
 
 .table th {
     font-weight: 600;
-}
-
-.table tbody tr:hover {
-    background-color: #080808;
-}
-
-.d-flex {
-    display: flex;
-    align-items: center;
-}
-
-.gap-2 {
-    gap: 8px;
 }
 
 /* Pagination */

@@ -122,18 +122,60 @@
 
                                     @can('delete_event')
                                         @if ($event->status === 'inactive')
-                                            <form action="{{ route('events.reactivate', $event->id) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-success btn-sm event-action-btn"><i
-                                                        class="bi bi-arrow-counterclockwise"></i> Reactive</button>
-                                            </form>
-                                        @else
                                             <form action="{{ route('events.destroy', $event->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm event-action-btn"><i
-                                                        class="bi bi-trash-fill"></i> Hapus</button>
+                                                <input type="hidden" name="delete_type" value="reactivate">
+                                                <button type="submit" class="btn btn-success btn-sm event-action-btn">
+                                                    <i class="bi bi-arrow-counterclockwise"></i> Reactive
+                                                </button>
                                             </form>
+                                        @else
+                                            <!-- Tombol untuk membuka modal -->
+                                            <button type="button" class="btn btn-danger btn-sm event-action-btn"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $event->id }}">
+                                                <i class="bi bi-trash-fill"></i> Hapus
+                                            </button>
+
+                                            <!-- Modal Konfirmasi -->
+                                            <div class="modal fade" id="deleteModal-{{ $event->id }}" tabindex="-1"
+                                                aria-labelledby="deleteModalLabel-{{ $event->id }}" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel-{{ $event->id }}">
+                                                                Konfirmasi Hapus
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Apa yang ingin Anda lakukan terhadap event ini?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <!-- Tombol untuk menonaktifkan -->
+                                                            <form action="{{ route('events.destroy', $event->id) }}"
+                                                                method="POST" style="display: inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="delete_type" value="inactive">
+                                                                <button type="submit"
+                                                                    class="btn btn-warning">Nonaktifkan</button>
+                                                            </form>
+
+                                                            <!-- Tombol untuk menghapus permanen -->
+                                                            <form action="{{ route('events.destroy', $event->id) }}"
+                                                                method="POST" style="display: inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="delete_type" value="permanent">
+                                                                <button type="submit" class="btn btn-danger">Hapus
+                                                                    Permanen</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endif
                                     @endcan
                                 </div>
@@ -153,42 +195,8 @@
                 <a href="{{ $url }}" class="page-link {{ $page == $events->currentPage() ? 'active' : '' }}"
                     style="font-family: 'Poppins', sans-serif;">{{ $page }}</a>
             @endforeach
-            <a href="{{ $events->nextPageUrl() }}" class="page-link" style="font-family: 'Poppins', sans-serif;">Next</a>
-        </div>
-    </div>
-
-
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="successModalLabel">Password Updated Successfully</h5>
-                </div>
-                <div class="modal-body">
-                    Event berhasil di buat. <b>klik dimana saja untuk menutup. Terima Kasih</b>
-                </div>
-                <div class="modal-footer">
-                    <a href="{{ route('events.index') }}" class="btn btn-primary">kembali</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                </div>
-                <div class="modal-body">
-                    Terjadi kesalahan. <b>klik dimana saja untuk menutup. Terima Kasih</b>
-                </div>
-                <div class="modal-footer">
-                    <a href="{{ route('events.index') }}" class="btn btn-danger">kembali</a>
-                </div>
-            </div>
+            <a href="{{ $events->nextPageUrl() }}" class="page-link"
+                style="font-family: 'Poppins', sans-serif;">Next</a>
         </div>
     </div>
 

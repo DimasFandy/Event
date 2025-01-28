@@ -78,12 +78,27 @@ class KategoriController extends Controller
     }
 
     // Menghapus kategori
-    public function destroy(Kategori $kategori)
+    public function destroy(Request $request, Kategori $kategori)
     {
-        // Mengubah status kategori menjadi 'inactive'
-        $kategori->update(['status' => 'inactive']);
-        return redirect()->route('kategoris.index')->with('success', 'Kategori berhasil dihapus!');
+        $deleteType = $request->input('delete_type'); // Ambil tipe aksi dari input form
+
+        if ($deleteType === 'permanent') {
+            // Hapus permanen kategori
+            $kategori->delete();
+            return redirect()->route('kategoris.index')->with('success', 'Kategori berhasil dihapus permanen!');
+        } elseif ($deleteType === 'deactivate') {
+            // Nonaktifkan kategori
+            $kategori->update(['status' => 'inactive']);
+            return redirect()->route('kategoris.index')->with('success', 'Kategori berhasil dinonaktifkan!');
+        } elseif ($deleteType === 'reactivate') {
+            // Aktifkan kembali kategori
+            $kategori->update(['status' => 'active']);
+            return redirect()->route('kategoris.index')->with('success', 'Kategori berhasil diaktifkan kembali!');
+        }
+
+        return redirect()->route('kategoris.index')->with('error', 'Aksi tidak valid.');
     }
+
 
     // Reactivate category (update status to active)
     public function reactivate(Kategori $kategori)

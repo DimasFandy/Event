@@ -180,22 +180,23 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'Event berhasil diperbarui.');
     }
 
-
-    public function reactivate(Event $event)
+    public function destroy(Request $request, Event $event)
     {
-        $event->status = 'active'; // Atau set status lain sesuai kebutuhan
-        $event->save();
-
-        return redirect()->route('events.index')->with('success', 'Event berhasil diaktifkan kembali!');
+        if ($request->input('delete_type') === 'permanent') {
+            $event->delete(); // Hapus permanen
+            return redirect()->route('events.index')->with('success', 'Event berhasil dihapus permanen!');
+        } elseif ($request->input('delete_type') === 'inactive') {
+            $event->status = 'inactive'; // Ubah status menjadi inactive
+            $event->save();
+            return redirect()->route('events.index')->with('success', 'Event berhasil dinonaktifkan!');
+        } elseif ($request->input('delete_type') === 'reactivate') {
+            $event->status = 'active'; // Aktifkan kembali event
+            $event->save();
+            return redirect()->route('events.index')->with('success', 'Event berhasil diaktifkan kembali!');
+        }
     }
 
-    public function destroy(Event $event)
-    {
-        $event->status = 'inactive'; // Atau hapus jika diperlukan
-        $event->save();
 
-        return redirect()->route('events.index')->with('success', 'Event berhasil dinonaktifkan!');
-    }
 
     public function destroyMember(Request $request, $event_id, $member_id)
     {

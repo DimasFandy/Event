@@ -140,10 +140,10 @@
 }
 
 /* Chart container styling */
-.chart-container {
+/* .chart-container {
     background-color: #b8b8b8;
     border-radius: 12px;
-}
+} */
 
 /* Canvas Styling */
 .chart-container canvas {
