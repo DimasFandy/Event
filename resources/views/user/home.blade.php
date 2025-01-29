@@ -120,11 +120,10 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <h2>About The Event</h2>
-                        <p>Sed nam ut dolor qui repellendus iusto odit. Possimus inventore eveniet accusamus error amet
-                            eius aut
-                            accusantium et. Non odit consequatur repudiandae sequi ea odio molestiae. Enim possimus sunt
-                            inventore in
-                            est ut optio sequi unde.</p>
+                        <p>Acara ini diselenggarakan untuk memberikan pengalaman yang berkesan bagi para peserta. Dengan
+                            berbagai kegiatan menarik, peserta akan mendapatkan wawasan baru, kesempatan untuk
+                            berjejaring, serta pengalaman yang tidak terlupakan. Jangan lewatkan kesempatan ini untuk
+                            bergabung dan menjadi bagian dari acara yang inspiratif dan penuh manfaat!</p>
                     </div>
                     <div class="col-lg-3">
                         <h3>Where</h3>
@@ -673,29 +672,29 @@
 
     <!-- Template Main Javascript File -->
     <script src="{{ asset('js/main.js') }}"></script>
-      <!-- SweetAlert2 -->
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-      <script>
-          // Display success alert when 'success' session variable is set
-          @if (session('success'))
-              Swal.fire({
-                  title: 'Sukses!',
-                  text: "{{ session('success') }}",
-                  icon: 'success',
-                  confirmButtonText: 'Oke'
-              });
-          @endif
+    <script>
+        // Display success alert when 'success' session variable is set
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'Oke'
+            });
+        @endif
 
-          @if (session('error'))
-              Swal.fire({
-                  title: 'Gagal!',
-                  text: "{{ session('error') }}",
-                  icon: 'error',
-                  confirmButtonText: 'Coba Lagi'
-              });
-          @endif
-      </script>
+        @if (session('error'))
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'Coba Lagi'
+            });
+        @endif
+    </script>
 </body>
 
 </html>
