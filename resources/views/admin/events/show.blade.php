@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Detail Events')
 
 @section('content')
 

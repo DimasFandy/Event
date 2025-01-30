@@ -24,6 +24,8 @@ class DashboardController extends Controller
     // Menghitung jumlah event
     $eventCount = $events->count();
 
+    $latestEvents = Event::orderBy('created_at', 'desc')->take(5)->get();
+
     // Menghitung jumlah member yang terdaftar untuk event tertentu
     $registeredMembersCount = $events->flatMap(function ($event) {
         return $event->members;
@@ -101,7 +103,8 @@ class DashboardController extends Controller
         'nextMonths',
         'nextMembers', // Kirim data jumlah member bulan mendatang
         'eventsWithMembers',
-        'eventsWithInterestPercentage'
+        'eventsWithInterestPercentage',
+        'latestEvents'
     ));
 }
 

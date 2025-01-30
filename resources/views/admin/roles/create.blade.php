@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Tambah Roles')
 
 @section('content')
     <div class="container">

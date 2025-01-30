@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Daftar Members')
 
 @section('content')
 
@@ -66,7 +67,7 @@
             });
         @endif
     </script>
-    
+
     <script>
         var $j = jQuery.noConflict(); // Menghindari konflik
 

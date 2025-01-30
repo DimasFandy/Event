@@ -1,8 +1,10 @@
+/* General styling for the dropdown menu */
 .nav-menu .dropdown {
     position: relative;
     display: inline-block;
 }
 
+/* Styling for the dropdown menu */
 .nav-menu .dropdown-menu {
     display: none;
     position: absolute;
@@ -12,22 +14,20 @@
     z-index: 1;
 }
 
+/* Dropdown menu appears when hovering */
 .nav-menu .dropdown:hover .dropdown-menu {
     display: block;
 }
 
+/* Styling for user photo */
 .user-photo {
     width: 30px;
-    /* Lebar foto */
     height: 30px;
-    /* Tinggi foto */
     border-radius: 50%;
-    /* Membuat gambar berbentuk lingkaran */
     object-fit: cover;
-    /* Memastikan gambar tidak terdistorsi */
 }
 
-/* css event */
+/* Styling for event speakers */
 #speakers .speaker {
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -45,9 +45,7 @@
 #speakers .speaker img {
     width: 100%;
     height: 200px;
-    /* Atur tinggi gambar */
     object-fit: cover;
-    /* Potong gambar agar sesuai */
 }
 
 #speakers .details {
@@ -76,4 +74,70 @@
 
 #speakers .details .social a:hover {
     color: #007bff;
+}
+
+/* Media Query for mobile responsiveness */
+@media (max-width: 768px) {
+    /* Change dropdown menu to be full width and positioned below the parent */
+    .nav-menu .dropdown-menu {
+        position: relative;
+        min-width: 100%;
+    }
+
+    /* Adjust user photo size for smaller screens */
+    .user-photo {
+        width: 25px;
+        height: 25px;
+    }
+
+    /* Adjust speaker card layout */
+    #speakers .speaker {
+        margin-bottom: 15px;
+    }
+
+    /* Adjust image height in the speaker cards */
+    #speakers .speaker img {
+        height: 180px;
+    }
+
+    /* Adjust the font size of speaker details for smaller screens */
+    #speakers .details h3 {
+        font-size: 16px;
+    }
+
+    #speakers .details p {
+        font-size: 12px;
+    }
+
+    /* Adjust social media icon size */
+    #speakers .details .social a {
+        font-size: 16px;
+    }
+}
+
+/* Further adjustments for very small screens (mobile phones) */
+@media (max-width: 480px) {
+    /* Stack the dropdown menus vertically */
+    .nav-menu {
+        display: block;
+    }
+
+    .nav-menu .dropdown {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Adjust font size for smaller screens */
+    #speakers .details h3 {
+        font-size: 14px;
+    }
+
+    #speakers .details p {
+        font-size: 12px;
+    }
+
+    #speakers .details .social a {
+        font-size: 14px;
+    }
 }

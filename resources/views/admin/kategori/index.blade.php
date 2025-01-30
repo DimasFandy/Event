@@ -1,5 +1,6 @@
     @extends('admin.layouts.app')
 
+    @section('title', 'Daftar Kategori')
 
     <!-- Google Fonts -->
     <link

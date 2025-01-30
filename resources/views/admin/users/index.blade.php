@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Daftar User')
 
 @section('content')
     <h1>Users</h1>

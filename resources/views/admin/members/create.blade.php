@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Tambah Member')
 
 @section('content')
 <div class="container-fluid" style="margin-left: px;"> <!-- Ensure this is beside the sidebar -->

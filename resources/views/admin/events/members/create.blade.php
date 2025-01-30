@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Peserta Event')
 
 @section('content')
 <div class="content-wrapper" style="margin: 20px; padding: 20px; background: linear-gradient(135deg, #0047ab, #ffa500); border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">

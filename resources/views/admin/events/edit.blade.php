@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Edit Events')
 
 @section('content')
     <!-- Tambahkan CSS Select2 -->

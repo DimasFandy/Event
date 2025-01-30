@@ -153,8 +153,8 @@
                     </div>
                 </div>
             @endif
-
-            <a href="{{ route('home') }}" class="btn btn-primary mb-2"><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/FFFFFF/long-arrow-left.png" alt="long-arrow-left"/> back to home</a>
+            <a href="#" class="btn btn-primary mb-2" onclick="window.history.back(); return false;"><img width="20" height="20" src="https://img.icons8.com/ios-filled/50/FFFFFF/long-arrow-left.png" alt="long-arrow-left"/> Previous</a>
+            <a href="{{ route('home') }}" class="btn btn-primary mb-2"> back to home</a>
             <div class="row mb-5">
                 <div class="col-md-6">
                     <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->name }}"
@@ -176,8 +176,6 @@
                         <p><strong>Jumlah Peserta Terdaftar:</strong> {{ $participantCount }} peserta</p>
 
                         <div class="d-flex">
-                            <a href="#" class="btn btn-primary mr-2" onclick="window.history.back(); return false;">Kembali</a>
-
                             <!-- Cek apakah member sudah mendaftar -->
                             @php
                                 $isRegistered = \App\Models\EventMember::where('event_id', $event->id)

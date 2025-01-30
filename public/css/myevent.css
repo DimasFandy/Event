@@ -50,6 +50,15 @@
     border-color: #0056b3;
     transform: scale(1.05);
 }
+.badge {
+    min-width: 110px; /* Sesuaikan ukuran minimum */
+    height: 20px;
+    text-align: center;
+    display: inline-block; /* Pastikan ukuran berlaku */
+    ; /* Atur padding agar seimbang */
+    font-size: 14px; /* Sesuaikan ukuran font */
+    font-weight: bold; /* Tambahkan ketebalan font */
+}
 
 /* Judul */
 h1 {

@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Daftar Permissions')
 
 @section('content')
     <div class="container">
@@ -85,7 +86,7 @@
             });
         }
     </script>
-    
+
      <!-- SweetAlert2 -->
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

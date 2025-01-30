@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Tambah Kategori')
 
 @section('content')
 <div class="container" style="max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background: linear-gradient(to bottom right, #6a11cb, #2575fc); animation: fadeIn 1s ease; color: #fff;">

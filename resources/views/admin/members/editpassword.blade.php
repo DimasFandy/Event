@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Editpassword Member')
 
 @section('content')
 <div class="container mt-5">
