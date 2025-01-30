@@ -42,7 +42,7 @@ class MemberController extends Controller
                         }
 
                         if (auth()->user()->can('ganti_passwordmember')) {
-                            $buttons .= '<a href="' . route('members.editPassword', $row->id) . '" class="btn btn-primary btn-sm ">Change Password</a>';
+                            $buttons .= '<a href="' . route('members.editPassword', $row->id) . '" class="btn btn-primary btn-sm">Change Password</a>';
                         }
 
                         if (auth()->user()->can('delete_member')) {
@@ -50,7 +50,7 @@ class MemberController extends Controller
                             <form action="' . route('members.destroy', $row->id) . '" method="POST" style="display:inline;">
                                 ' . csrf_field() . '
                                 ' . method_field('DELETE') . '
-                                <button type="submit" class="btn btn-danger btn-sm mx-1">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>';
                         }
 

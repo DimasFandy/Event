@@ -33,7 +33,7 @@
         <div class="sidebar" style="width: 250px; background-color: #343a40; color: white; padding: 15px;">
             <h4><img width="48" height="48"
                     src="https://img.icons8.com/fluency/48/discord-hypesquad-events-badge.png"
-                    alt="discord-hypesquad-events-badge" /> Admin</h4>
+                    alt="discord-hypesquad-events-badge" /> Admin Events</h4>
             <hr class="text-white">
             <a href="{{ route('admin.dashboard') }}"
                 class="text-white {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -44,34 +44,38 @@
             <!-- Dropdown Menu for Events -->
             <div class="mt-3">
                 <ul class="list-unstyled">
-                    <li class="dropdown">
+                    <li>
                         <a href="#"
                             class="text-white text-decoration-none dropdown-toggle {{ request()->routeIs('kategoris.*') || request()->routeIs('events.*') ? 'active' : '' }}"
                             data-bs-toggle="collapse" data-bs-target="#eventDropdown"
                             aria-expanded="{{ request()->routeIs('kategoris.*') || request()->routeIs('events.*') ? 'true' : 'false' }}"
                             aria-controls="eventDropdown">
                             <img width="30" height="30"
-                                src="https://img.icons8.com/fluency/48/event-accepted--v1.png"
-                                alt="event-accepted--v1" /> Manage Events
+                                src="https://img.icons8.com/fluency/48/event-accepted--v1.png" alt="event-accepted--v1"
+                                class="me-2" />
+                            Manage Events
                         </a>
-                        <ul class="collapse dropdown-menu {{ request()->routeIs('kategoris.*') || request()->routeIs('events.*') ? 'show' : '' }}"
+                        <div class="collapse {{ request()->routeIs('kategoris.*') || request()->routeIs('events.*') ? 'show' : '' }}"
                             id="eventDropdown">
-                            <li>
-                                <a href="{{ route('kategoris.index') }}"
-                                    class="dropdown-item text-black {{ request()->routeIs('kategoris.*') ? 'active' : '' }}">
-                                    Kategori
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('events.index') }}"
-                                    class="dropdown-item text-black {{ request()->routeIs('events.*') ? 'active' : '' }}">
-                                    List Event
-                                </a>
-                            </li>
-                        </ul>
+                            <a href="{{ route('kategoris.index') }}"
+                                class="list-group-item {{ request()->routeIs('kategoris.*') ? 'active' : '' }} rounded-3 px-3 py-2 my-1">
+                                Kategori
+                            </a>
+                            <a href="{{ route('events.index') }}"
+                                class="list-group-item {{ request()->routeIs('events.*') ? 'active' : '' }} rounded-3 px-3 py-2 my-1">
+                                List Event
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
+
+            <!-- Custom Styles -->
+            <style>
+
+            </style>
+
+
 
             <!-- Menu di Bawah Dropdown -->
             <div class="mt-2">
@@ -85,37 +89,36 @@
             <!-- Dropdown Menu for Roles, Permissions, and Users -->
             <div class="mt-3">
                 <ul class="list-unstyled">
-                    <li class="dropdown">
+                    <li>
+                        <!-- Tombol utama dropdown -->
                         <a href="#"
-                            class="text-white text-decoration-none dropdown-toggle {{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') || request()->routeIs('users.*') ? 'active' : '' }}"
-                            data-bs-toggle="collapse" data-bs-target="#adminDropdown"
-                            aria-expanded="{{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') || request()->routeIs('users.*') ? 'true' : 'false' }}"
-                            aria-controls="adminDropdown">
+                            class="text-white text-decoration-none dropdown-toggle
+                            {{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') || request()->routeIs('users.*') ? 'active' : '' }}"
+                            data-bs-toggle="collapse" data-bs-target="#adminDropdown">
                             <img width="30" height="30"
                                 src="https://img.icons8.com/ios-filled/100/228BE6/admin-settings-male.png"
                                 alt="admin-settings-male" /> Manage Admin
                         </a>
-                        <ul class="collapse dropdown-menu {{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') || request()->routeIs('users.*') ? 'show' : '' }}"
+
+                        <!-- Dropdown menu -->
+                        <div class="collapse {{ request()->routeIs('roles.*') || request()->routeIs('permissions.*') || request()->routeIs('users.*') ? 'show' : '' }}"
                             id="adminDropdown">
-                            <li>
-                                <a href="{{ route('roles.index') }}"
-                                    class="dropdown-item text-black {{ request()->routeIs('roles.*') ? 'active' : '' }}">
-                                    Roles
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('permissions.index') }}"
-                                    class="dropdown-item text-black {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
-                                    Permissions
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('users.index') }}"
-                                    class="dropdown-item text-black {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                                    Users
-                                </a>
-                            </li>
-                        </ul>
+                            <a href="{{ route('roles.index') }}"
+                                class="list-group-item
+                                        {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                                Roles
+                            </a>
+                            <a href="{{ route('permissions.index') }}"
+                                class="list-group-item
+                                        {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+                                Permissions
+                            </a>
+                            <a href="{{ route('users.index') }}"
+                                class="list-group-item
+                                        {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                                Users
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>

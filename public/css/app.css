@@ -13,13 +13,13 @@
 }
 
 .sidebar:hover {
-    background-color: #495057; /* Darken the sidebar on hover */
+    background-color: #495057;
+    /* Darken the sidebar on hover */
 }
 
 .sidebar h4 {
     color: #fff;
     text-align: center;
-    /* margin-bottom: 2px; */
 }
 
 .sidebar hr {
@@ -39,17 +39,23 @@
 
 .sidebar a:hover {
     background-color: #495057;
-    color: #f1c40f; /* Yellow color on hover */
+    color: #f1c40f;
+    /* Yellow color on hover */
 }
 
 /* Active menu styling */
 .sidebar a.active {
-    background-color: #f1c40f; /* Yellow background for active menu */
-    color: #343a40; /* Dark color for active text */
-    font-weight: bold; /* Make the active menu bold */
+    background-color: #f1c40f;
+    /* Yellow background for active menu */
+    color: #ffffff;
+    /* Dark color for active text */
+    font-weight: bold;
+    /* Make the active menu bold */
     border-radius: 5px;
-    transform: scale(1.05); /* Slightly increase size for a more dynamic effect */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Add scale animation */
+    transform: scale(1.05);
+    /* Slightly increase size for a more dynamic effect */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    /* Add scale animation */
 }
 
 .sidebar .form-group {
@@ -60,7 +66,8 @@
 .content {
     margin-left: 250px;
     /* Push content to the right to make space for sidebar */
-    animation: fadeIn 0.5s ease-in-out; /* Fade-in effect for content */
+    animation: fadeIn 0.5s ease-in-out;
+    /* Fade-in effect for content */
 }
 
 /* Animation for content fade-in */
@@ -68,19 +75,73 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
 }
 
-/* Dropdown Animation */
+/* Dropdown Styling */
+.dropdown {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px 15px;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-toggle:hover, .dropdown-toggle.active {
+    background-color: #495057;
+    color: #f1c40f;
+}
+
 .dropdown-menu {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    display: none;
+    background-color: #343a40;
+    border-radius: 5px;
+    padding: 10px 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .dropdown-menu.show {
+    display: block;
     opacity: 1;
+    transform: translateY(10px);
+}
+
+.dropdown-item {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #495057;
+    color: #f1c40f;
+}
+
+/* Adjust for active dropdown items */
+.dropdown-item.active {
+    background-color: #f1c40f;
+    color: #343a40;
 }
 
 /* CSS Pagination Styling */
@@ -121,12 +182,12 @@
 }
 
 /* CSS DASHBOARD */
-/* Animation for fading in */
 @keyframes fadeIn {
     0% {
         opacity: 0;
         transform: translateY(20px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
