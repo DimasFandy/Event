@@ -78,6 +78,7 @@
 
 /* Media Query for mobile responsiveness */
 @media (max-width: 768px) {
+
     /* Change dropdown menu to be full width and positioned below the parent */
     .nav-menu .dropdown-menu {
         position: relative;
@@ -117,6 +118,7 @@
 
 /* Further adjustments for very small screens (mobile phones) */
 @media (max-width: 480px) {
+
     /* Stack the dropdown menus vertically */
     .nav-menu {
         display: block;
@@ -140,4 +142,12 @@
     #speakers .details .social a {
         font-size: 14px;
     }
+}
+
+.tab-content-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
 }

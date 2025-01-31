@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>TheEvent - Bootstrap Event Template</title>
+    <title>TheEvent</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -105,7 +105,6 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 footer-info">
                         <img src="{{ asset('img/logo.png') }}" alt="Logo">
-                        <p>In alias aperiam. Placeat tempore facere.</p>
                     </div>
                     <div class="col-lg-3 col-md-6 footer-links">
                         <h4>Useful Links</h4>
@@ -136,31 +135,44 @@
 
     <!-- JavaScript Libraries -->
     <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('lib/jquery/jquery-migrate.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('lib/superfish/hoverIntent.js') }}"></script>
+    <script src="{{ asset('lib/superfish/superfish.min.js') }}"></script>
+    <script src="{{ asset('lib/wow/wow.min.js') }}"></script>
+    <script src="{{ asset('lib/venobox/venobox.min.js') }}"></script>
+    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
 
-      <!-- SweetAlert2 -->
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-      <script>
-          // Display success alert when 'success' session variable is set
-          @if (session('success'))
-              Swal.fire({
-                  title: 'Sukses!',
-                  text: "{{ session('success') }}",
-                  icon: 'success',
-                  confirmButtonText: 'Oke'
-              });
-          @endif
+    <!-- Contact Form JavaScript File -->
+    <script src="contactform/contactform.js"></script>
 
-          @if (session('error'))
-              Swal.fire({
-                  title: 'Gagal!',
-                  text: "{{ session('error') }}",
-                  icon: 'error',
-                  confirmButtonText: 'Coba Lagi'
-              });
-          @endif
-      </script>
+    <!-- Template Main Javascript File -->
+    <script src="{{ asset('js/main.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Display success alert when 'success' session variable is set
+        @if (session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'Oke'
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                title: 'Gagal!',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'Coba Lagi'
+            });
+        @endif
+    </script>
 </body>
 
 </html>

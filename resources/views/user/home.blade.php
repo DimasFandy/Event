@@ -1,105 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('user.layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <title>The Events</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+@section('title', 'The Events')
 
-    <!-- Favicons -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon">
-    <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
-        rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap CSS File -->
-    <link href="{{ asset('lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Libraries CSS Files -->
-    <link href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('lib/venobox/venobox.css') }}" rel="stylesheet">
-    <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-
-    <!-- Main Stylesheet File -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
-    <!-- =======================================================
-    Theme Name: TheEvent
-    Theme URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
-    Author: BootstrapMade.com
-    License: https://bootstrapmade.com/license/
-  ======================================================= -->
-</head>
-
-<body>
+@section('content')
 
     <!--==========================
-    Header
-  ============================-->
-    <header id="header">
-        <div class="container">
-            <div id="logo" class="pull-left">
-                <a href="#intro" class="scrollto"><img src="img/logo.png" alt="" title=""></a>
-            </div>
-
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-                    <li class="menu-active"><a href="#intro">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#speakers">Events</a></li>
-                    <li><a href="#schedule">Schedule</a></li>
-
-                    <!-- Tampilkan opsi berdasarkan status login -->
-                    @auth('member')
-                        <!-- Jika user login -->
-                        <li class="dropdown">
-                            <a href="#" class="d-flex align-items-center justify-content-between" id="userMenu"
-                                data-toggle="dropdown" aria-expanded="false">
-                                <!-- Tampilkan Nama -->
-                                <span class="me-2">{{ Auth::guard('member')->user()->name }}</span>
-                                <!-- Tampilkan Foto Profil -->
-                                <img src="{{ asset('storage/' . (Auth::guard('member')->user()->photo ?? 'user.jpg')) }}"
-                                    alt="User Photo" class="rounded-circle user-photo">
-
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="userMenu">
-                                <li>
-                                    <a href="{{ route('user.myevent') }}" class="dropdown-item">Event Saya</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('user.editprofile') }}" class="dropdown-item">Edit Profil</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('user.editpassword') }}" class="dropdown-item">Ubah Password</a>
-                                </li>
-                                <li>
-                                    <form id="logout-form" action="{{ route('logout.user') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @else
-                        <!-- Jika user belum login -->
-                        <li><a href="{{ route('user.auth.register_user') }}">Register</a></li>
-                        <li><a href="{{ route('user.auth.login_user') }}">Login</a></li>
-                    @endauth
-                </ul>
-            </nav><!-- #nav-menu-container -->
-        </div>
-    </header><!-- #header -->
-
-    <!--==========================
-    Intro Section
-  ============================-->
+        Intro Section
+      ============================-->
     <section id="intro">
         <div class="intro-container wow fadeIn">
             <h1 class="mb-4 pb-0">PT.Bidik<br><span>Inovasi</span>Global</h1>
@@ -113,8 +20,8 @@
     <main id="main">
 
         <!--==========================
-      About Section
-    ============================-->
+          About Section
+        ============================-->
         <section id="about">
             <div class="container">
                 <div class="row">
@@ -138,8 +45,8 @@
         </section>
 
         <!--==========================
-      Events Section
-    ============================-->
+          Events Section
+        ============================-->
         <section id="speakers" class="wow fadeInUp">
             <div class="container">
                 <div class="section-header">
@@ -154,8 +61,7 @@
                                 <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->name }}"
                                     class="img-fluid">
                                 <div class="details">
-                                    <h3><a
-                                            href="{{ route('user.events_details', $event->id) }}">{{ $event->name }}</a>
+                                    <h3><a href="{{ route('user.events_details', $event->id) }}">{{ $event->name }}</a>
                                     </h3>
                                     <p>{{ $event->category }}</p>
                                     <div class="social">
@@ -171,12 +77,9 @@
                 </div>
             </div>
         </section>
-
-
-
         <!--==========================
-      Schedule Section
-    ============================-->
+          Schedule Section
+        ============================-->
         <section id="schedule" class="section-with-bg">
             <div class="container wow fadeInUp">
                 <div class="section-header">
@@ -194,8 +97,8 @@
                 <ul class="nav nav-tabs" role="tablist">
                     @foreach ($groupedEvents as $monthYear => $monthEvents)
                         <li class="nav-item">
-                            <a class="nav-link {{ $loop->first ? 'active' : '' }}"
-                                href="#{{ Str::slug($monthYear) }}" role="tab" data-toggle="tab">
+                            <a class="nav-link {{ $loop->first ? 'active' : '' }}" href="#{{ Str::slug($monthYear) }}"
+                                role="tab" data-toggle="tab">
                                 {{ $monthYear }} <!-- Menampilkan bulan dan tahun -->
                             </a>
                         </li>
@@ -204,52 +107,46 @@
 
                 <h3 class="sub-heading">Menampilkan Events yang Tersedia</h3>
 
-                <div class="tab-content row justify-content-center">
-                    @foreach ($groupedEvents as $monthYear => $monthEvents)
-                        <div role="tabpanel" class="col-lg-9 tab-pane fade {{ $loop->first ? 'show active' : '' }}"
-                            id="{{ Str::slug($monthYear) }}">
-                            @foreach ($monthEvents as $event)
-                                <div class="row schedule-item mb-4">
-                                    <!-- Menambahkan margin bawah untuk jarak antar item -->
-                                    <div class="col-md-2 d-flex flex-column align-items-center">
-                                        <!-- Menampilkan waktu mulai (start_date) -->
-                                        <time class="mb-2">
-                                            {{ \Carbon\Carbon::parse($event->start_date)->setTimezone('Asia/Jakarta')->format('d-M-Y H:i A') }}
-                                        </time>
-                                        <!-- Menampilkan waktu selesai (end_date) -->
-                                        <time>
-                                            {{ \Carbon\Carbon::parse($event->end_date)->setTimezone('Asia/Jakarta')->format('d-M-Y H:i A') }}
-                                        </time>
-                                    </div>
+                <div class="tab-content-container">
+                    <div class="tab-content row justify-content-center">
+                        @foreach ($groupedEvents as $monthYear => $monthEvents)
+                            <div role="tabpanel" class="col-lg-9 tab-pane fade {{ $loop->first ? 'show active' : '' }}"
+                                id="{{ Str::slug($monthYear) }}">
+                                @foreach ($monthEvents as $event)
+                                    <div class="row schedule-item mb-4">
+                                        <div class="col-md-2 d-flex flex-column align-items-center">
+                                            <time class="mb-2">
+                                                {{ \Carbon\Carbon::parse($event->start_date)->setTimezone('Asia/Jakarta')->format('d-M-Y H:i A') }}
+                                            </time>
+                                            <time>
+                                                {{ \Carbon\Carbon::parse($event->end_date)->setTimezone('Asia/Jakarta')->format('d-M-Y H:i A') }}
+                                            </time>
+                                        </div>
 
-                                    <div class="col-md-10">
-                                        <div class="d-flex align-items-start">
-                                            <!-- Gambar di kiri -->
-                                            <img src="{{ asset('storage/' . $event->image_path) }}"
-                                                alt="{{ $event->name }}" class="img-fluid mr-3"
-                                                style="max-width: 200px; height: auto;">
-                                            <!-- Deskripsi di kanan -->
-                                            <div>
-                                                <h4>{{ $event->title }} <span
-                                                        class="text-muted">{{ $event->speaker_name }}</span></h4>
-                                                <p>{{ $event->description }}</p>
+                                        <div class="col-md-10">
+                                            <div class="d-flex align-items-start">
+                                                <img src="{{ asset('storage/' . $event->image_path) }}"
+                                                    alt="{{ $event->name }}" class="img-fluid mr-3"
+                                                    style="max-width: 200px; height: auto;">
+                                                <div>
+                                                    <h4>{{ $event->title }} <span
+                                                            class="text-muted">{{ $event->speaker_name }}</span></h4>
+                                                    <p>{{ $event->description }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-
-            </div>
-
         </section>
 
         <!--==========================
-      Venue Section
-    ============================-->
+          Venue Section
+        ============================-->
         <section id="venue" class="wow fadeInUp">
 
             <div class="container-fluid">
@@ -277,7 +174,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="container-fluid venue-gallery-container">
@@ -353,13 +249,13 @@
         </section>
 
         <!--==========================
-      Hotels Section
-    ============================-->
+          Hotels Section
+        ============================-->
 
 
         <!--==========================
-      Gallery Section
-    ============================-->
+          Gallery Section
+        ============================-->
         <section id="gallery" class="wow fadeInUp">
 
             <div class="container">
@@ -370,29 +266,29 @@
             </div>
 
             <div class="owl-carousel gallery-carousel">
-                <a href="img/gallery/1.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/1.jpg" alt=""></a>
-                <a href="img/gallery/2.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/2.jpg" alt=""></a>
-                <a href="img/gallery/3.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/3.jpg" alt=""></a>
-                <a href="img/gallery/4.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/4.jpg" alt=""></a>
-                <a href="img/gallery/5.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/5.jpg" alt=""></a>
-                <a href="img/gallery/6.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/6.jpg" alt=""></a>
-                <a href="img/gallery/7.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/7.jpg" alt=""></a>
-                <a href="img/gallery/8.jpg" class="venobox" data-gall="gallery-carousel"><img
-                        src="img/gallery/8.jpg" alt=""></a>
+                <a href="img/gallery/1.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/1.jpg"
+                        alt=""></a>
+                <a href="img/gallery/2.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/2.jpg"
+                        alt=""></a>
+                <a href="img/gallery/3.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/3.jpg"
+                        alt=""></a>
+                <a href="img/gallery/4.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/4.jpg"
+                        alt=""></a>
+                <a href="img/gallery/5.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/5.jpg"
+                        alt=""></a>
+                <a href="img/gallery/6.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/6.jpg"
+                        alt=""></a>
+                <a href="img/gallery/7.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/7.jpg"
+                        alt=""></a>
+                <a href="img/gallery/8.jpg" class="venobox" data-gall="gallery-carousel"><img src="img/gallery/8.jpg"
+                        alt=""></a>
             </div>
 
         </section>
 
         <!--==========================
-      Sponsors Section
-    ============================-->
+          Sponsors Section
+        ============================-->
         <section id="supporters" class="section-with-bg wow fadeInUp">
 
             <div class="container">
@@ -457,8 +353,8 @@
         </section>
 
         <!--==========================
-      F.A.Q Section
-    ============================-->
+          F.A.Q Section
+        ============================-->
         <section id="faq" class="wow fadeInUp">
 
             <div class="container">
@@ -557,144 +453,17 @@
             </div>
 
         </section>
-
         <!--==========================
-      Subscribe Section
-    ============================-->
-
-
+          Subscribe Section
+        ============================-->
         <!--==========================
-      Buy Ticket Section
-    ============================-->
-
-
+          Buy Ticket Section
+        ============================-->
         <!--==========================
-      Contact Section
-    ============================-->
+          Contact Section
+        ============================-->
         <!-- #contact -->
 
     </main>
 
-
-    <!--==========================
-    Footer
-  ============================-->
-    <footer id="footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-3 col-md-6 footer-info">
-                        <img src="img/logo.png" alt="PT.BIG">
-                        <p>In alias aperiam. Placeat tempore facere. Officiis voluptate ipsam vel eveniet est dolor et
-                            totam porro. Perspiciatis ad omnis fugit molestiae recusandae possimus. Aut consectetur id
-                            quis. In inventore consequatur ad voluptate cupiditate debitis accusamus repellat cumque.
-                        </p>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 footer-links">
-                        <h4>Useful Links</h4>
-                        <ul>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 footer-links">
-                        <h4>Useful Links</h4>
-                        <ul>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
-                            <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 footer-contact">
-                        <h4>Contact Us</h4>
-                        <p>
-                            A108 Adam Street <br>
-                            New York, NY 535022<br>
-                            United States <br>
-                            <strong>Phone:</strong> +1 5589 55488 55<br>
-                            <strong>Email:</strong> info@example.com<br>
-                        </p>
-
-                        <div class="social-links">
-                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
-                            <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
-                            <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="copyright">
-                &copy; Copyright <strong>PT.Garis Pertama Solution</strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                <!--
-          All the links in the footer should remain intact.
-          You can delete the links only if you purchased the pro version.
-          Licensing information: https://bootstrapmade.com/license/
-          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=TheEvent
-        -->
-            </div>
-        </div>
-    </footer><!-- #footer -->
-
-    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
-
-    <!-- JavaScript Libraries -->
-    <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('lib/jquery/jquery-migrate.min.js') }}"></script>
-    <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('lib/superfish/hoverIntent.js') }}"></script>
-    <script src="{{ asset('lib/superfish/superfish.min.js') }}"></script>
-    <script src="{{ asset('lib/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('lib/venobox/venobox.min.js') }}"></script>
-    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
-
-
-    <!-- Contact Form JavaScript File -->
-    <script src="contactform/contactform.js"></script>
-
-    <!-- Template Main Javascript File -->
-    <script src="{{ asset('js/main.js') }}"></script>
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        // Display success alert when 'success' session variable is set
-        @if (session('success'))
-            Swal.fire({
-                title: 'Sukses!',
-                text: "{{ session('success') }}",
-                icon: 'success',
-                confirmButtonText: 'Oke'
-            });
-        @endif
-
-        @if (session('error'))
-            Swal.fire({
-                title: 'Gagal!',
-                text: "{{ session('error') }}",
-                icon: 'error',
-                confirmButtonText: 'Coba Lagi'
-            });
-        @endif
-    </script>
-</body>
-
-</html>
+@endsection

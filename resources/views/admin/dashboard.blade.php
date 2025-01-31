@@ -333,7 +333,7 @@
                                     <td>{{ $event->name }}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            @foreach ($event->members->take(8) as $member)
+                                            @foreach ($event->members->take(5) as $member)
                                                 <img src="{{ asset('storage/' . ($member->photo ?? 'user.jpg')) }}"
                                                     alt="{{ $member->name }}" class="rounded-circle border" width="40"
                                                     height="40" style="margin-right: -10px; z-index: 1;">

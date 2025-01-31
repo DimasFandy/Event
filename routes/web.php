@@ -102,6 +102,9 @@ Route::put('/members/{id}/update-password', [MemberController::class, 'updatePas
 
 Route::get('events/{event_id}/export-pdf', [EventController::class, 'exportPdf'])->name('events.export_pdf');
 
+//menampilkan event berdasarkan kategoridi halaman user
+Route::get('/events/category/{categoryId}', [HomeController::class, 'showCategoryEvents'])->name('events.category');
+
 Route::middleware('auth:member')->group(function () {
     Route::get('/editprofile', [AuthUserController::class, 'editProfile'])->name('user.editprofile');
     Route::put('/editprofile', [AuthUserController::class, 'updateProfile'])->name('user.profile.update');  // Menggunakan PUT untuk pembaruan
@@ -114,6 +117,7 @@ Route::get('verify-otp/{member_id}', [AuthUserController::class, 'showVerifyOtpF
 // Route untuk menangani verifikasi OTP
 Route::post('verify-otp/{member_id}', [AuthUserController::class, 'verifyOtp'])->name('user.auth.verify_otp');
 
-//rpute untuk menampilkan schedule di halaman user 
+//rpute untuk menampilkan schedule di halaman user
 Route::get('/schedule', [HomeController::class, 'showSchedule']);
+
 
