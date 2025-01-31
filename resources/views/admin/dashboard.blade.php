@@ -317,6 +317,7 @@
                             <th>No</th>
                             <th>Gambar</th>
                             <th>Nama Event</th>
+                            <th>Member Terdaftar</th>
                             <th>Tanggal Dibuat</th>
                             <th>Status</th>
                         </tr>
@@ -326,12 +327,26 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $event->image_path) }}"
-                                         alt="{{ $event->name }}"
-                                         class="img-thumbnail"
-                                         width="100">
+                                    <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->name }}"
+                                        class="img-thumbnail" width="100">
                                 </td>
                                 <td>{{ $event->name }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @foreach ($event->members->take(5) as $member)
+                                            <img src="{{ asset('storage/' . ($member->photo ?? 'user.jpg')) }}"
+                                                 alt="{{ $member->name }}"
+                                                 class="rounded-circle border"
+                                                 width="40" height="40"
+                                                 style="margin-right: -10px; z-index: 1;">
+                                        @endforeach
+                                        @if ($event->members->count() > 5)
+                                            <span class="badge bg-primary ms-2">
+                                                +{{ $event->members->count() - 5 }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </td>
                                 <td>{{ $event->created_at->format('d M Y') }}</td>
                                 <td><span class="badge bg-success">Baru</span></td>
                             </tr>
@@ -342,6 +357,7 @@
         </div>
     </div>
 </div>
+
 
 
 

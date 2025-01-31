@@ -214,11 +214,11 @@
                                     <div class="col-md-2 d-flex flex-column align-items-center">
                                         <!-- Menampilkan waktu mulai (start_date) -->
                                         <time class="mb-2">
-                                            {{ \Carbon\Carbon::parse($event->start_date)->setTimezone('Asia/Jakarta')->format('d-M-Y h:i A') }}
+                                            {{ \Carbon\Carbon::parse($event->start_date)->setTimezone('Asia/Jakarta')->format('d-M-Y H:i A') }}
                                         </time>
                                         <!-- Menampilkan waktu selesai (end_date) -->
                                         <time>
-                                            {{ \Carbon\Carbon::parse($event->end_date)->setTimezone('Asia/Jakarta')->format('d-M-Y h:i A') }}
+                                            {{ \Carbon\Carbon::parse($event->end_date)->setTimezone('Asia/Jakarta')->format('d-M-Y H:i A') }}
                                         </time>
                                     </div>
 

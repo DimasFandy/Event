@@ -116,13 +116,14 @@
     width: 100%;
     box-sizing: border-box;
     z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .dropdown-menu.show {
     display: block;
-    opacity: 1;
-    transform: translateY(10px);
+    animation: slideDown 0.3s ease forwards;
 }
 
 .dropdown-item {
@@ -142,6 +143,17 @@
 .dropdown-item.active {
     background-color: #f1c40f;
     color: #343a40;
+}
+/* Animation for sliding down dropdown */
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* CSS Pagination Styling */
