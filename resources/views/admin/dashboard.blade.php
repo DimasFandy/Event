@@ -305,58 +305,56 @@
     </script>
 
     <div class="row mt-4">
-    <div class="col-md-12">
-        <div class="card custom-card shadow-lg">
-            <div class="card-header gradient-header">
-                Events Terbaru
-            </div>
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Gambar</th>
-                            <th>Nama Event</th>
-                            <th>Member Terdaftar</th>
-                            <th>Tanggal Dibuat</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($latestEvents as $index => $event)
+        <div class="col-md-12">
+            <div class="card custom-card shadow-lg">
+                <div class="card-header gradient-header">
+                    Events Terbaru
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>
-                                    <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->name }}"
-                                        class="img-thumbnail" width="100">
-                                </td>
-                                <td>{{ $event->name }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        @foreach ($event->members->take(5) as $member)
-                                            <img src="{{ asset('storage/' . ($member->photo ?? 'user.jpg')) }}"
-                                                 alt="{{ $member->name }}"
-                                                 class="rounded-circle border"
-                                                 width="40" height="40"
-                                                 style="margin-right: -10px; z-index: 1;">
-                                        @endforeach
-                                        @if ($event->members->count() > 5)
-                                            <span class="badge bg-primary ms-2">
-                                                +{{ $event->members->count() - 5 }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td>{{ $event->created_at->format('d M Y') }}</td>
-                                <td><span class="badge bg-success">Baru</span></td>
+                                <th>No</th>
+                                <th>Gambar</th>
+                                <th>Nama Event</th>
+                                <th>Member Terdaftar</th>
+                                <th>Tanggal Dibuat</th>
+                                <th>Status</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($latestEvents as $index => $event)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>
+                                        <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->name }}"
+                                            class="img-thumbnail" width="100">
+                                    </td>
+                                    <td>{{ $event->name }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            @foreach ($event->members->take(8) as $member)
+                                                <img src="{{ asset('storage/' . ($member->photo ?? 'user.jpg')) }}"
+                                                    alt="{{ $member->name }}" class="rounded-circle border" width="40"
+                                                    height="40" style="margin-right: -10px; z-index: 1;">
+                                            @endforeach
+                                            @if ($event->members->count() > 5)
+                                                <span class="badge bg-primary ms-2">
+                                                    +{{ $event->members->count() - 5 }}
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td>{{ $event->created_at->format('d M Y') }}</td>
+                                    <td><span class="badge bg-success">Baru</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 

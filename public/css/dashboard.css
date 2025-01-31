@@ -179,3 +179,12 @@ canvas {
     justify-content: center;
     align-items: center;
 }
+.avatar-stack img {
+    margin-right: -10px;
+    z-index: 1;
+}
+
+.avatar-stack img:nth-child(n) {
+    z-index: calc(10 - var(--index));
+}
+
