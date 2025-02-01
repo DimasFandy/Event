@@ -30,6 +30,7 @@
     <!-- Main Stylesheet File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+   
 
 </head>
 
@@ -48,7 +49,7 @@
                 <ul class="nav-menu">
                     <li class="menu-active"><a href="{{ route('home') }}">Home</a></li>
                     <li><a href="{{ route('home') }}#about">About</a></li>
-                    <li><a href="{{ route('home') }}#speakers">Events</a></li>
+                    <li><a href="{{ route('events.index') }}">Events</a></li>
                     <li><a href="{{ route('home') }}#schedule">Schedule</a></li>
 
                     @guest('member')

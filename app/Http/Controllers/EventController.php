@@ -130,7 +130,6 @@ class EventController extends Controller
         return view('admin.events.edit', compact('event', 'kategori', 'selectedCategories'));
     }
 
-
     public function show(Event $event)
     {
         // Ambil peserta yang terdaftar dengan pagination
@@ -139,7 +138,6 @@ class EventController extends Controller
         // Kirim data event dan peserta ke view
         return view('admin.events.show', compact('event', 'members'));
     }
-
 
     public function update(Request $request, Event $event)
     {
@@ -195,8 +193,6 @@ class EventController extends Controller
             return redirect()->route('events.index')->with('success', 'Event berhasil diaktifkan kembali!');
         }
     }
-
-
 
     public function destroyMember(Request $request, $event_id, $member_id)
     {
@@ -290,4 +286,31 @@ class EventController extends Controller
 
         return $pdf->stream('event-detail-' . $event->id . '.pdf');
     }
+
+    // Method untuk menampilkan event bagi user member
+    public function userIndex()
+    {
+        // Ambil semua kategori
+        $kategoris = Kategori::all();
+        // Mengambil semua event dari database
+        $events = Event::all();
+
+        // Mengembalikan view dengan data events
+        return view('user.events.index', compact('events', 'kategoris'));
+    }
+    //method untuk menampilkan kategori di halaman user
+    public function filterByKategori($kategoriId)
+    {
+        // Ambil kategori berdasarkan ID
+        $kategori = Kategori::findOrFail($kategoriId);
+
+        // Ambil event yang sesuai dengan kategori yang dipilih
+        $events = $kategori->events;
+
+        // Ambil semua kategori untuk ditampilkan di view
+        $kategoris = Kategori::all();
+
+        return view('user.events.index', compact('events', 'kategoris', 'kategori'));
+    }
+
 }

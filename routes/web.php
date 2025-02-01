@@ -58,6 +58,9 @@ Route::get('events/export', function () {
 
 // CRUD Event
 Route::resource('events', EventController::class);
+// Route untuk halaman user events
+Route::get('/events', [EventController::class, 'userIndex'])->name('events.index');
+Route::get('/events/kategori/{kategoriId}', [EventController::class, 'filterByKategori'])->name('events.kategori');
 
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 // Route::post('events/{event}/reactivate', [EventController::class, 'reactivate'])->name('events.reactivate');
@@ -101,9 +104,6 @@ Route::get('/members/{id}/editpassword', [MemberController::class, 'editPassword
 Route::put('/members/{id}/update-password', [MemberController::class, 'updatePassword'])->name('members.update-password');
 
 Route::get('events/{event_id}/export-pdf', [EventController::class, 'exportPdf'])->name('events.export_pdf');
-
-//menampilkan event berdasarkan kategoridi halaman user
-Route::get('/events/category/{categoryId}', [HomeController::class, 'showCategoryEvents'])->name('events.category');
 
 Route::middleware('auth:member')->group(function () {
     Route::get('/editprofile', [AuthUserController::class, 'editProfile'])->name('user.editprofile');

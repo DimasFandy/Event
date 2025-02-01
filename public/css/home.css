@@ -147,7 +147,7 @@
 .tab-content-container {
     max-height: 500px;
     overflow-y: auto;
-    border: 1px solid #ddd;
+    overflow-x: hidden; /* Menghilangkan scroll horizontal */
     padding: 10px;
     border-radius: 8px;
 }

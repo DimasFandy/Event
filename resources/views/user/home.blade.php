@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-lg-3">
                         <h3>Where</h3>
-                        <p>Downtown Conference Center, New York</p>
+                        <p>Jl. Trosobo No.82 Tropodo Wetan, Kec. Waru , Kabupaten Sidoarjo, Jawa Timur, Indonesia</p>
                     </div>
                     <div class="col-lg-3">
                         <h3>When</h3>
@@ -59,10 +59,9 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="speaker">
                                 <img src="{{ asset('storage/' . $event->image_path) }}" alt="{{ $event->name }}"
-                                    class="img-fluid">
+                                     class="img-fluid">
                                 <div class="details">
-                                    <h3><a href="{{ route('user.events_details', $event->id) }}">{{ $event->name }}</a>
-                                    </h3>
+                                    <h3><a href="{{ route('user.events_details', $event->id) }}">{{ $event->name }}</a></h3>
                                     <p>{{ $event->category }}</p>
                                     <div class="social">
                                         <a href=""><i class="fa fa-twitter"></i></a>
@@ -75,8 +74,14 @@
                         </div>
                     @endforeach
                 </div>
+
+                <!-- Pagination Links -->
+                <div class="pagination">
+                    {{ $events->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </section>
+
         <!--==========================
           Schedule Section
         ============================-->
