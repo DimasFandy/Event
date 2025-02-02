@@ -240,6 +240,11 @@ class EventController extends Controller
         // Validasi apakah event ada
         $event = Event::findOrFail($id);
 
+        // Cek apakah member sudah login
+        if (!auth('member')->check()) {
+            // Redirect ke halaman login dengan pesan error
+            return redirect()->route('user.auth.login_user')->with('warning', 'Harap login terlebih dahulu.');
+        }
         // Cek apakah member sudah mendaftar ke event ini
         $existingRegistration = EventMember::where('event_id', $event->id)
             ->where('member_id', auth('member')->id()) // Ambil ID member dari guard 'member'
@@ -312,5 +317,4 @@ class EventController extends Controller
 
         return view('user.events.index', compact('events', 'kategoris', 'kategori'));
     }
-
 }

@@ -30,7 +30,7 @@
     <!-- Main Stylesheet File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
-   
+
 
 </head>
 
@@ -171,6 +171,16 @@
                 text: "{{ session('error') }}",
                 icon: 'error',
                 confirmButtonText: 'Coba Lagi'
+            });
+        @endif
+        
+        // Display warning alert for login redirection
+        @if (session('warning'))
+            Swal.fire({
+                title: 'Perhatian!',
+                text: "{{ session('warning') }}",
+                icon: 'warning',
+                confirmButtonText: 'Login Sekarang'
             });
         @endif
     </script>

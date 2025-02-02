@@ -64,6 +64,9 @@ Route::get('/events/kategori/{kategoriId}', [EventController::class, 'filterByKa
 
 Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
 // Route::post('events/{event}/reactivate', [EventController::class, 'reactivate'])->name('events.reactivate');
+Route::post('/events/{event}/register', [EventController::class, 'register'])
+    ->middleware('auth:member')
+    ->name('events.register');
 
 // API untuk mendapatkan data dropdown dan data terfilter
 Route::post('/getDropdownData', [KategoriController::class, 'getDropdownData'])->name('getDropdownData');
